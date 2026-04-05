@@ -691,7 +691,11 @@ function openHistory() {
 		document.getElementById('loss-count').innerText = losses;
 	});
 	
-	
+	function renderAdminPanel() {
+    document.getElementById('admin-users-count').innerText = users.length;
+    renderVisitorsList();
+    drawGlobe();
+}
 
     // Lista utenti
     const list = document.getElementById('admin-users-list');
