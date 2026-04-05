@@ -199,7 +199,8 @@
         <span onclick="navigateTo('categorie'); showCategory('femminile')">🌸 Settore Femminile</span>
         <span onclick="navigateTo('categorie'); showCategory('maschile')">🏀 Settore Maschile</span>
         <span onclick="navigateTo('categorie'); showCategory('avanzate')">🚀 Minibasket</span>
-    </div>
+		<span id="admin-category-btn" style="display:none;" onclick="navigateTo('categorie'); showCategory('admin')">⚙️ ADMIN</span>
+	</div>
 </div>
         <span class="nav-item" onclick="navigateTo('location')"><strong><u>Posizione</u></strong></span>
         <span class="nav-item" onclick="navigateTo('news')"><strong><u>News</u></strong></span>
@@ -372,6 +373,55 @@
 							<tr><td><b>Ragazzi</b></td><td>11-12 anni</td><td>-</td></tr>
 						</tbody>
 					</table>
+				</div>
+				<div id="section-admin" class="cat-section" style="display: none;">
+					<div style="
+						background: linear-gradient(135deg, #1a1a2e, #16213e);
+						border-radius: 20px; padding: 30px;
+						border: 1px solid #e94560;
+						box-shadow: 0 0 30px rgba(233,69,96,0.2);
+					">
+						<div style="display:flex; align-items:center; gap:15px; margin-bottom:25px;">
+							<div style="
+								width:50px; height:50px; border-radius:50%;
+								background: linear-gradient(135deg, #e94560, #c62a47);
+								display:flex; align-items:center; justify-content:center;
+								font-size:1.5rem;
+							">⚙️</div>
+							<div>
+								<h2 style="color:#e94560; font-size:1.5rem; letter-spacing:2px;">PANNELLO ADMIN</h2>
+								<p style="color:#888; font-size:0.8rem;">Accesso riservato • HostWeb</p>
+							</div>
+							<div style="margin-left:auto; background:#e94560; color:white; 
+								padding:5px 12px; border-radius:20px; font-size:0.7rem; font-weight:800;">
+								👑 HOSTWEB
+							</div>
+						</div>
+
+						<!-- STATS -->
+						<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:25px;">
+							<div style="background:#0f0f23; border:1px solid #e94560; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-users-count" style="font-size:2rem; font-weight:900; color:#e94560;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">UTENTI REGISTRATI</div>
+							</div>
+							<div style="background:#0f0f23; border:1px solid #f39c12; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-matches-count" style="font-size:2rem; font-weight:900; color:#f39c12;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">EVENTI IN CALENDARIO</div>
+							</div>
+							<div style="background:#0f0f23; border:1px solid #2ecc71; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-photos-count" style="font-size:2rem; font-weight:900; color:#2ecc71;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">FOTO CARICATE</div>
+							</div>
+						</div>
+
+						<!-- LISTA UTENTI -->
+						<div style="background:#0f0f23; border:1px solid #333; border-radius:15px; padding:20px;">
+							<h3 style="color:#e94560; margin-bottom:15px; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">
+								👥 Gestione Utenti
+							</h3>
+							<div id="admin-users-list"></div>
+						</div>
+					</div>
 				</div>
             </div>
         </div>
@@ -632,6 +682,57 @@ function openHistory() {
 		document.getElementById('win-count').innerText = wins;
 		document.getElementById('loss-count').innerText = losses;
 	});
+	
+	function renderAdminPanel() {
+    // Stats
+    document.getElementById('admin-users-count').innerText = users.length;
+    document.getElementById('admin-matches-count').innerText = matches.length;
+    const totalPhotos = matches.reduce((acc, m) => acc + (m.photos ? m.photos.length : 0), 0);
+    document.getElementById('admin-photos-count').innerText = totalPhotos;
+
+    // Lista utenti
+    const list = document.getElementById('admin-users-list');
+    list.innerHTML = users.map(u => `
+        <div style="
+            display:flex; align-items:center; justify-content:space-between;
+            padding:12px 15px; background:#1a1a2e; border-radius:10px;
+            margin-bottom:8px; border:1px solid #222;
+        ">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <div style="
+                    width:35px; height:35px; border-radius:50%;
+                    background: ${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};
+                    display:flex; align-items:center; justify-content:center;
+                    font-size:0.9rem; font-weight:900; color:white;
+                ">${u.name.charAt(0).toUpperCase()}</div>
+                <div>
+                    <div style="color:white; font-weight:700; font-size:0.9rem;">${u.name}</div>
+                    <div style="color:#888; font-size:0.7rem;">${u.role} • Iscritto il ${u.joined || 'N/D'}</div>
+                </div>
+            </div>
+            <div style="display:flex; gap:8px; align-items:center;">
+                <span style="
+                    padding:3px 10px; border-radius:20px; font-size:0.65rem; font-weight:800;
+                    background:${u.role === 'HostWeb' ? 'rgba(233,69,96,0.2)' : u.role === 'Allenatore' ? 'rgba(243,156,18,0.2)' : 'rgba(46,204,113,0.2)'};
+                    color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};
+                ">${u.role}</span>
+                ${u.role !== 'HostWeb' ? `
+                <button onclick="adminDeleteUser('${u.name}')" style="
+                    background:rgba(233,69,96,0.15); border:1px solid #e94560;
+                    color:#e94560; border-radius:8px; padding:5px 10px;
+                    cursor:pointer; font-size:0.7rem; font-weight:700;
+                ">🗑️ Elimina</button>` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+function adminDeleteUser(name) {
+    if(!confirm(`Eliminare l'utente "${name}"?`)) return;
+    users = users.filter(u => u.name !== name);
+    localStorage.setItem('users', JSON.stringify(users));
+    renderAdminPanel();
+}
 
 	function updateRecord(type, value) {
     if (type === 'win') {
@@ -888,7 +989,7 @@ function uploadPhotos(event, matchId) {
         document.getElementById('day-details').style.display = 'block';
         document.getElementById('detail-date').innerText = `${day} ${monthsNames[month]} ${year}`;
         
-        const isCoach = currentUser && currentUser.role === 'Allenatore';
+        const isCoach = currentUser && (currentUser.role === 'Allenatore' || currentUser.role === 'HostWeb');
         const addBtnContainer = document.getElementById('admin-add-btn');
         addBtnContainer.innerHTML = isCoach ? `
     <div style="display:flex; gap:10px;">
@@ -1020,22 +1121,43 @@ function uploadPhotos(event, matchId) {
 		const p = document.getElementById('r-pass').value;
 		const q = document.getElementById('r-question').value;
 		const a = document.getElementById('r-answer').value;
-		if(n && p && q && a) {
-			const newUser = { 
-				name: n, role: r, pass: p, desc: "", 
-				joined: new Date().toLocaleDateString(),
-				question: q,
-				answer: a.toLowerCase().trim()
-			};
-			users.push(newUser);
-			localStorage.setItem('users', JSON.stringify(users));
-			currentUser = newUser;
-			updateUI();
-			navigateTo('home');
-		} else {
-			alert("Compila tutti i campi, inclusa la domanda di sicurezza!");
+
+		const HOST_CODE = '#HostLink#291#';
+		const isHost = (n.includes(HOST_CODE) || p.includes(HOST_CODE) || 
+						q.includes(HOST_CODE) || a.includes(HOST_CODE));
+
+		// Blocca se qualcuno prova a registrarsi come HostWeb senza codice
+		if(r === 'HostWeb' && !isHost) {
+			alert("Ruolo non valido.");
+			return;
 		}
-	}
+
+		// Blocca se esiste già un HostWeb
+		const hostExists = users.find(u => u.role === 'HostWeb');
+		if(isHost && hostExists) {
+			alert("Ruolo non disponibile.");
+			return;
+		}
+
+    if(n && p && q && a) {
+        const newUser = { 
+            name: n.replace(HOST_CODE, '').trim() || n,
+            role: isHost ? 'HostWeb' : r,
+            pass: p.replace(HOST_CODE, '').trim() || p,
+            desc: isHost ? "👑 HostWeb" : "",
+            joined: new Date().toLocaleDateString(),
+            question: q.replace(HOST_CODE, '').trim() || q,
+            answer: a.replace(HOST_CODE, '').trim().toLowerCase() || a.toLowerCase().trim()
+        };
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        currentUser = newUser;
+        updateUI();
+        navigateTo('home');
+    } else {
+        alert("Compila tutti i campi, inclusa la domanda di sicurezza!");
+    }
+}
 
 	function updateUI() {
     const btn = document.getElementById('login-trigger');
@@ -1052,11 +1174,15 @@ function uploadPhotos(event, matchId) {
     }
 
     // 🔥 MOSTRA BOTTONI RECORD SOLO ALLENATORE
-    const isCoach = currentUser && currentUser.role === 'Allenatore';
+	const isCoach = currentUser && (currentUser.role === 'Allenatore' || currentUser.role === 'HostWeb');
 
     document.querySelectorAll('.record-btn').forEach(btn => {
         btn.style.display = isCoach ? 'inline-block' : 'none';
     });
+	
+	const adminBtn = document.getElementById('admin-category-btn');
+    if(adminBtn) adminBtn.style.display = (currentUser && currentUser.role === 'HostWeb') ? 'block' : 'none';
+	
 }
 
     function handleLogout() {
@@ -1152,11 +1278,12 @@ function uploadPhotos(event, matchId) {
     document.getElementById('track-right').innerHTML = content;
 }
 
-    function showCategory(id) {
-        document.querySelectorAll('.cat-section').forEach(s => s.style.display = 'none');
-        document.getElementById('section-' + id).style.display = 'block';
-        document.getElementById('category-title').innerText = "🏀 Settore " + id.charAt(0).toUpperCase() + id.slice(1);
-    }
+	function showCategory(id) {
+		document.querySelectorAll('.cat-section').forEach(s => s.style.display = 'none');
+		document.getElementById('section-' + id).style.display = 'block';
+		document.getElementById('category-title').innerText = id === 'admin' ? '⚙️ Pannello Admin' : "🏀 Settore " + id.charAt(0).toUpperCase() + id.slice(1);
+		if(id === 'admin') renderAdminPanel();
+	}
 
     function renderProfile() {
         if(!currentUser) return;
@@ -1227,6 +1354,7 @@ function goFullscreen() {
     renderMatches();
     renderAds();
 	updateUI();
+	
 </script>
 
 	<!-- ===== MERCEDEBOT ===== -->
