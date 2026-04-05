@@ -787,7 +787,7 @@ function adminDeleteUser(name) {
     // --- GESTIONE PARTITE & FOTO (LOGICA RICHIESTA) ---
     
 	function addTrainingDialog(day) {
-    if(!currentUser || currentUser.role !== 'Allenatore') return;
+    if(!currentUser || (currentUser.role !== 'Allenatore' && currentUser.role !== 'HostWeb')) return;
 
     const month = parseInt(document.getElementById('cal-month').value);
     const year = parseInt(document.getElementById('cal-year').value);
@@ -812,8 +812,8 @@ function adminDeleteUser(name) {
     showDay(day);
 }
 	
-    function addMatchDialog(day) {
-        if(!currentUser || currentUser.role !== 'Allenatore') return;
+	function addMatchDialog(day) {
+    if(!currentUser || (currentUser.role !== 'Allenatore' && currentUser.role !== 'HostWeb')) return;
         
         const month = parseInt(document.getElementById('cal-month').value);
         const year = parseInt(document.getElementById('cal-year').value);
@@ -858,7 +858,7 @@ function adminDeleteUser(name) {
         if(newTeam) m.opp = "Mercede vs " + newTeam;
         if(newTime) m.t = newTime;
 		
-        savematches();
+        saveMatches();
         showDay(day);
         renderMatches();
     }
