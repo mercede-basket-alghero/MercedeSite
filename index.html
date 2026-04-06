@@ -727,7 +727,7 @@ function openHistory() {
     renderUserDetails();
 }
 
-	function adminDeleteUser(name) {
+function adminDeleteUser(name) {
     if(!confirm(`Eliminare l'utente "${name}"?`)) return;
     users = users.filter(u => u.name !== name);
     localStorage.setItem('users', JSON.stringify(users));
