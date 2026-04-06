@@ -1291,55 +1291,6 @@ function goFullscreen() {
     else if (iframe.mozRequestFullScreen) iframe.mozRequestFullScreen();
 }
 
-function renderAdminPanel() {
-    document.getElementById('admin-users-count').innerText = users.length;
-    document.getElementById('admin-matches-count').innerText = matches.length;
-    const totalPhotos = matches.reduce((acc, m) => acc + (m.photos ? m.photos.length : 0), 0);
-    document.getElementById('admin-photos-count').innerText = totalPhotos;
-
-    const list = document.getElementById('admin-users-list');
-    list.innerHTML = users.map(u => `
-        <div style="
-            display:flex; align-items:center; justify-content:space-between;
-            padding:12px 15px; background:#1a1a2e; border-radius:10px;
-            margin-bottom:8px; border:1px solid #222;
-        ">
-            <div style="display:flex; align-items:center; gap:12px;">
-                <div style="
-                    width:35px; height:35px; border-radius:50%;
-                    background: ${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};
-                    display:flex; align-items:center; justify-content:center;
-                    font-size:0.9rem; font-weight:900; color:white;
-                ">${u.name.charAt(0).toUpperCase()}</div>
-                <div>
-                    <div style="color:white; font-weight:700; font-size:0.9rem;">${u.name}</div>
-                    <div style="color:#888; font-size:0.7rem;">${u.role} • Iscritto il ${u.joined || 'N/D'}</div>
-                </div>
-            </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-                <span style="
-                    padding:3px 10px; border-radius:20px; font-size:0.65rem; font-weight:800;
-                    background:${u.role === 'HostWeb' ? 'rgba(233,69,96,0.2)' : u.role === 'Allenatore' ? 'rgba(243,156,18,0.2)' : 'rgba(46,204,113,0.2)'};
-                    color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};
-                ">${u.role}</span>
-                ${u.role !== 'HostWeb' ? `
-                <button onclick="adminDeleteUser('${u.name}')" style="
-                    background:rgba(233,69,96,0.15); border:1px solid #e94560;
-                    color:#e94560; border-radius:8px; padding:5px 10px;
-                    cursor:pointer; font-size:0.7rem; font-weight:700;
-                ">🗑️ Elimina</button>` : ''}
-            </div>
-        </div>
-    `).join('');
-}
-
-function adminDeleteUser(name) {
-    if(!confirm(`Eliminare l'utente "${name}"?`)) return;
-    users = users.filter(u => u.name !== name);
-    localStorage.setItem('users', JSON.stringify(users));
-    renderAdminPanel();
-}
-	
     // Init
     window.onclick = closeAllDropdowns;
     renderMatches();
