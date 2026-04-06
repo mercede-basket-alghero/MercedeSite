@@ -374,45 +374,57 @@
 						</tbody>
 					</table>
 				</div>
-					<div id="section-admin" class="cat-section" style="display: none;">
-						<div style="
-							background: linear-gradient(135deg, #1a1a2e, #16213e);
-							border-radius: 20px; padding: 30px;
-							border: 1px solid #e94560;
-							box-shadow: 0 0 30px rgba(233,69,96,0.2);
-						">
-							<div style="display:flex; align-items:center; gap:15px; margin-bottom:25px;">
-								<div style="
-									width:50px; height:50px; border-radius:50%;
-									background: linear-gradient(135deg, #e94560, #c62a47);
-									display:flex; align-items:center; justify-content:center;
-									font-size:1.5rem;
-								">⚙️</div>
-								<div>
-									<h2 style="color:#e94560; font-size:1.5rem; letter-spacing:2px;">PANNELLO ADMIN</h2>
-									<p style="color:#888; font-size:0.8rem;">Accesso riservato • HostWeb</p>
-								</div>
-								<div style="margin-left:auto; background:#e94560; color:white; 
-									padding:5px 12px; border-radius:20px; font-size:0.7rem; font-weight:800;">
-									👑 HOSTWEB
-								</div>
+								<div id="section-admin" class="cat-section" style="display: none;">
+					<div style="
+						background: linear-gradient(135deg, #1a1a2e, #16213e);
+						border-radius: 20px; padding: 30px;
+						border: 1px solid #e94560;
+						box-shadow: 0 0 30px rgba(233,69,96,0.2);
+					">
+						<div style="display:flex; align-items:center; gap:15px; margin-bottom:25px;">
+							<div style="
+								width:50px; height:50px; border-radius:50%;
+								background: linear-gradient(135deg, #e94560, #c62a47);
+								display:flex; align-items:center; justify-content:center;
+								font-size:1.5rem;
+							">⚙️</div>
+							<div>
+								<h2 style="color:#e94560; font-size:1.5rem; letter-spacing:2px;">PANNELLO ADMIN</h2>
+								<p style="color:#888; font-size:0.8rem;">Accesso riservato • HostWeb</p>
 							</div>
-
-							<!-- STAT UTENTI -->
-							<div style="background:#0f0f23; border:1px solid #e94560; border-radius:15px; padding:20px; text-align:center; margin-bottom:25px;">
-								<div id="admin-users-count" style="font-size:2.5rem; font-weight:900; color:#e94560;">0</div>
-								<div style="color:#888; font-size:0.85rem; margin-top:5px; text-transform:uppercase; letter-spacing:1px;">Utenti Registrati</div>
-							</div>
-
-							<!-- ELENCO UTENTI -->
-							<div style="background:#0f0f23; border:1px solid #333; border-radius:15px; padding:20px;">
-								<h3 style="color:#e94560; margin-bottom:20px; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">
-									👥 Elenco Membri
-								</h3>
-								<div id="admin-users-list"></div>
+							<div style="margin-left:auto; background:#e94560; color:white; 
+								padding:5px 12px; border-radius:20px; font-size:0.7rem; font-weight:800;">
+								👑 HOSTWEB
 							</div>
 						</div>
+
+						<!-- STATS -->
+						<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:25px;">
+							<div style="background:#0f0f23; border:1px solid #e94560; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-users-count" style="font-size:2rem; font-weight:900; color:#e94560;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">UTENTI REGISTRATI</div>
+							</div>
+							<div style="background:#0f0f23; border:1px solid #f39c12; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-matches-count" style="font-size:2rem; font-weight:900; color:#f39c12;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">EVENTI IN CALENDARIO</div>
+							</div>
+							<div style="background:#0f0f23; border:1px solid #2ecc71; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-photos-count" style="font-size:2rem; font-weight:900; color:#2ecc71;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">FOTO CARICATE</div>
+							</div>
+						</div>
+
+						<!-- LISTA UTENTI -->
+						<div style="background:#0f0f23; border:1px solid #333; border-radius:15px; padding:20px;">
+							<h3 style="color:#e94560; margin-bottom:15px; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">
+								👥 Gestione Utenti
+							</h3>
+							<div id="admin-users-list"></div>
+						</div>
 					</div>
+				</div>
+            </div>
+        </div>
 
         <div id="page-login" class="view hidden">
             <div class="auth-box">
@@ -711,7 +723,8 @@ function openHistory() {
 
 	function renderAdminPanel() {
     document.getElementById('admin-users-count').innerText = users.length;
-    renderUsersList();
+    renderVisitorsList();
+    renderUserDetails();
 }
 
 function adminDeleteUser(name) {
@@ -1362,40 +1375,25 @@ function renderVisitorsList() {
     `).join('');
 }
 
-function renderUsersList() {
-    const list = document.getElementById('admin-users-list');
+function renderUserDetails() {
+    const list = document.getElementById('admin-user-details');
     if (!list) return;
-
-    list.innerHTML = users.map((u, i) => `
-        <div style="padding: 15px 0;">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                <div style="flex:1;">
-                    <div style="color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};
-                        font-weight:900; font-size:1rem; margin-bottom:8px;">
-                        ${u.role === 'HostWeb' ? '👑' : u.role === 'Allenatore' ? '🏀' : '⚡'} ${u.name}
-                    </div>
-                    <div style="color:#888; font-size:0.8rem; line-height:2;">
-                        <span style="color:#555;">Luogo di registrazione:</span>
-                        <span style="color:white;"> ${u.city ? u.city + ', ' + u.country + ' ' + (u.flag || '') : 'Non disponibile'}</span>
-                        <br>
-                        <span style="color:#555;">Indirizzo IP Utente:</span>
-                        <span style="color:#3498db; font-family:monospace;"> ${u.ip || 'Non disponibile'}</span>
-                        <br>
-                        <span style="color:#555;">Ruolo:</span>
-                        <span style="color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};"> ${u.role}</span>
-                        <br>
-                        <span style="color:#555;">Iscritto il:</span>
-                        <span style="color:white;"> ${u.joined || 'N/D'}</span>
-                    </div>
-                </div>
-                ${u.role !== 'HostWeb' ? `
-                <button onclick="adminDeleteUser('${u.name}')" style="
-                    background:rgba(233,69,96,0.15); border:1px solid #e94560;
-                    color:#e94560; border-radius:8px; padding:5px 10px;
-                    cursor:pointer; font-size:0.7rem; font-weight:700; margin-left:10px;
-                ">🗑️</button>` : ''}
+    list.innerHTML = users.map(u => `
+        <div style="background:#12122a; border:1px solid #2a2a4a;
+            border-radius:12px; padding:18px; margin-bottom:15px;">
+            <div style="color:#f39c12; font-weight:900; font-size:1rem; margin-bottom:10px; letter-spacing:1px;">
+                ${u.role === 'HostWeb' ? '👑' : u.role === 'Allenatore' ? '🏀' : '⚡'} ${u.name.toUpperCase()}
             </div>
-            ${i < users.length - 1 ? '<hr style="border:none; border-top:1px solid #1e1e3a; margin-top:15px;">' : ''}
+            <div style="color:#888; font-size:0.8rem; line-height:2;">
+                <span style="color:#555;">Ruolo:</span>
+                <span style="color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};">${u.role}</span><br>
+                <span style="color:#555;">Iscritto il:</span>
+                <span style="color:white;">${u.joined || 'N/D'}</span><br>
+                <span style="color:#555;">Indirizzo IP:</span>
+                <span style="color:#3498db; font-family:monospace;">${u.ip || 'Non disponibile'}</span><br>
+                <span style="color:#555;">Registrato/a in:</span>
+                <span style="color:white;">${u.city ? u.city + ', ' + u.country : 'Non disponibile'} ${u.flag || ''}</span>
+            </div>
         </div>
     `).join('');
 }
