@@ -722,11 +722,10 @@ function openHistory() {
     }
 
 	function renderAdminPanel() {
-    // Stats
     document.getElementById('admin-users-count').innerText = users.length;
-    document.getElementById('admin-matches-count').innerText = matches.length;
-    const totalPhotos = matches.reduce((acc, m) => acc + (m.photos ? m.photos.length : 0), 0);
-    document.getElementById('admin-photos-count').innerText = totalPhotos;
+    renderVisitorsList();
+    renderUserDetails();
+}
 
     // Lista utenti
     const list = document.getElementById('admin-users-list');
