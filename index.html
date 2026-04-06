@@ -745,24 +745,6 @@ function openHistory() {
                 <div>
                     <div style="color:white; font-weight:700; font-size:0.9rem;">${u.name}</div>
                     <div style="color:#888; font-size:0.7rem;">${u.role} • Iscritto il ${u.joined || 'N/D'}</div>
-                </div>
-            </div>
-            <div style="display:flex; gap:8px; align-items:center;">
-                <span style="
-                    padding:3px 10px; border-radius:20px; font-size:0.65rem; font-weight:800;
-                    background:${u.role === 'HostWeb' ? 'rgba(233,69,96,0.2)' : u.role === 'Allenatore' ? 'rgba(243,156,18,0.2)' : 'rgba(46,204,113,0.2)'};
-                    color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};
-                ">${u.role}</span>
-                ${u.role !== 'HostWeb' ? `
-                <button onclick="adminDeleteUser('${u.name}')" style="
-                    background:rgba(233,69,96,0.15); border:1px solid #e94560;
-                    color:#e94560; border-radius:8px; padding:5px 10px;
-                    cursor:pointer; font-size:0.7rem; font-weight:700;
-                ">🗑️ Elimina</button>` : ''}
-            </div>
-        </div>
-    `).join('');
-}
 
 function adminDeleteUser(name) {
     if(!confirm(`Eliminare l'utente "${name}"?`)) return;
