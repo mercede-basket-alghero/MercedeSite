@@ -734,7 +734,7 @@ function openHistory() {
     // --- GESTIONE PARTITE & FOTO (LOGICA RICHIESTA) ---
     
 	function addTrainingDialog(day) {
-    if(!currentUser || (currentUser.role !== 'Allenatore' && currentUser.role !== 'HostWeb')) return;
+    if(!currentUser || currentUser.role !== 'Allenatore') return;
 
     const month = parseInt(document.getElementById('cal-month').value);
     const year = parseInt(document.getElementById('cal-year').value);
@@ -760,7 +760,7 @@ function openHistory() {
 }
 	
     function addMatchDialog(day) {
-        if(!currentUser || (currentUser.role !== 'Allenatore' && currentUser.role !== 'HostWeb')) return;
+        if(!currentUser || currentUser.role !== 'Allenatore') return;
         
         const month = parseInt(document.getElementById('cal-month').value);
         const year = parseInt(document.getElementById('cal-year').value);
@@ -805,7 +805,7 @@ function openHistory() {
         if(newTeam) m.opp = "Mercede vs " + newTeam;
         if(newTime) m.t = newTime;
 		
-        saveMatches();
+        savematches();
         showDay(day);
         renderMatches();
     }
@@ -1126,10 +1126,6 @@ function uploadPhotos(event, matchId) {
     document.querySelectorAll('.record-btn').forEach(btn => {
         btn.style.display = isCoach ? 'inline-block' : 'none';
     });
-	
-	 const adminBtn = document.getElementById('admin-category-btn');
-    if(adminBtn) adminBtn.style.display = (currentUser && currentUser.role === 'HostWeb') ? 'block' : 'none';
-	
 }
 
     function handleLogout() {
@@ -1225,12 +1221,11 @@ function uploadPhotos(event, matchId) {
     document.getElementById('track-right').innerHTML = content;
 }
 
-function showCategory(id) {
-    document.querySelectorAll('.cat-section').forEach(s => s.style.display = 'none');
-    document.getElementById('section-' + id).style.display = 'block';
-    document.getElementById('category-title').innerText = id === 'admin' ? '⚙️ Pannello Admin' : "🏀 Settore " + id.charAt(0).toUpperCase() + id.slice(1);
-    if(id === 'admin') renderAdminPanel();
-}
+    function showCategory(id) {
+        document.querySelectorAll('.cat-section').forEach(s => s.style.display = 'none');
+        document.getElementById('section-' + id).style.display = 'block';
+        document.getElementById('category-title').innerText = "🏀 Settore " + id.charAt(0).toUpperCase() + id.slice(1);
+    }
 
     function renderProfile() {
         if(!currentUser) return;
