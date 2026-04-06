@@ -1162,6 +1162,8 @@ function uploadPhotos(event, matchId) {
 	function updateUI() {
     const btn = document.getElementById('login-trigger');
     const area = document.getElementById('logged-user-area');
+	const adminBtn = document.getElementById('admin-category-btn');
+	if(adminBtn) adminBtn.style.display = (currentUser && currentUser.role === 'HostWeb') ? 'block' : 'none';
 
     if(currentUser) {
         btn.classList.add('hidden');
