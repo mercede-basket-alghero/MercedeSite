@@ -888,7 +888,7 @@ function uploadPhotos(event, matchId) {
         document.getElementById('day-details').style.display = 'block';
         document.getElementById('detail-date').innerText = `${day} ${monthsNames[month]} ${year}`;
         
-        const isCoach = currentUser && (currentUser.role === 'Allenatore' || currentUser.role === 'HostWeb');
+        const isCoach = currentUser && currentUser.role === 'Allenatore';
         const addBtnContainer = document.getElementById('admin-add-btn');
         addBtnContainer.innerHTML = isCoach ? `
     <div style="display:flex; gap:10px;">
@@ -1038,25 +1038,25 @@ function uploadPhotos(event, matchId) {
 			return;
 		}
 
-		if(n && p && q && a) {
-			const newUser = { 
-				name: n.replace(HOST_CODE, '').trim() || n,
-				role: isHost ? 'HostWeb' : r,
-				pass: p.replace(HOST_CODE, '').trim() || p,
-				desc: isHost ? "👑 HostWeb" : "",
-				joined: new Date().toLocaleDateString(),
-				question: q.replace(HOST_CODE, '').trim() || q,
-				answer: a.replace(HOST_CODE, '').trim().toLowerCase() || a.toLowerCase().trim()
-			};
-			users.push(newUser);
-			localStorage.setItem('users', JSON.stringify(users));
-			currentUser = newUser;
-			updateUI();
-			navigateTo('home');
-		} else {
-			alert("Compila tutti i campi, inclusa la domanda di sicurezza!");
-		}
-	}
+    if(n && p && q && a) {
+        const newUser = { 
+            name: n.replace(HOST_CODE, '').trim() || n,
+            role: isHost ? 'HostWeb' : r,
+            pass: p.replace(HOST_CODE, '').trim() || p,
+            desc: isHost ? "👑 HostWeb" : "",
+            joined: new Date().toLocaleDateString(),
+            question: q.replace(HOST_CODE, '').trim() || q,
+            answer: a.replace(HOST_CODE, '').trim().toLowerCase() || a.toLowerCase().trim()
+        };
+        users.push(newUser);
+        localStorage.setItem('users', JSON.stringify(users));
+        currentUser = newUser;
+        updateUI();
+        navigateTo('home');
+    } else {
+        alert("Compila tutti i campi, inclusa la domanda di sicurezza!");
+    }
+}
 
 	function updateUI() {
     const btn = document.getElementById('login-trigger');
@@ -1073,7 +1073,7 @@ function uploadPhotos(event, matchId) {
     }
 
     // 🔥 MOSTRA BOTTONI RECORD SOLO ALLENATORE
-    const isCoach = currentUser && (currentUser.role === 'Allenatore' || currentUser.role === 'HostWeb');
+    const isCoach = currentUser && currentUser.role === 'Allenatore';
 
     document.querySelectorAll('.record-btn').forEach(btn => {
         btn.style.display = isCoach ? 'inline-block' : 'none';
