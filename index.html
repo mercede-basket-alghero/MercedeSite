@@ -374,6 +374,55 @@
 						</tbody>
 					</table>
 				</div>
+								<div id="section-admin" class="cat-section" style="display: none;">
+					<div style="
+						background: linear-gradient(135deg, #1a1a2e, #16213e);
+						border-radius: 20px; padding: 30px;
+						border: 1px solid #e94560;
+						box-shadow: 0 0 30px rgba(233,69,96,0.2);
+					">
+						<div style="display:flex; align-items:center; gap:15px; margin-bottom:25px;">
+							<div style="
+								width:50px; height:50px; border-radius:50%;
+								background: linear-gradient(135deg, #e94560, #c62a47);
+								display:flex; align-items:center; justify-content:center;
+								font-size:1.5rem;
+							">⚙️</div>
+							<div>
+								<h2 style="color:#e94560; font-size:1.5rem; letter-spacing:2px;">PANNELLO ADMIN</h2>
+								<p style="color:#888; font-size:0.8rem;">Accesso riservato • HostWeb</p>
+							</div>
+							<div style="margin-left:auto; background:#e94560; color:white; 
+								padding:5px 12px; border-radius:20px; font-size:0.7rem; font-weight:800;">
+								👑 HOSTWEB
+							</div>
+						</div>
+
+						<!-- STATS -->
+						<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:25px;">
+							<div style="background:#0f0f23; border:1px solid #e94560; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-users-count" style="font-size:2rem; font-weight:900; color:#e94560;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">UTENTI REGISTRATI</div>
+							</div>
+							<div style="background:#0f0f23; border:1px solid #f39c12; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-matches-count" style="font-size:2rem; font-weight:900; color:#f39c12;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">EVENTI IN CALENDARIO</div>
+							</div>
+							<div style="background:#0f0f23; border:1px solid #2ecc71; border-radius:15px; padding:20px; text-align:center;">
+								<div id="admin-photos-count" style="font-size:2rem; font-weight:900; color:#2ecc71;">0</div>
+								<div style="color:#888; font-size:0.75rem; margin-top:5px;">FOTO CARICATE</div>
+							</div>
+						</div>
+
+						<!-- LISTA UTENTI -->
+						<div style="background:#0f0f23; border:1px solid #333; border-radius:15px; padding:20px;">
+							<h3 style="color:#e94560; margin-bottom:15px; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">
+								👥 Gestione Utenti
+							</h3>
+							<div id="admin-users-list"></div>
+						</div>
+					</div>
+				</div>
             </div>
         </div>
 
@@ -671,6 +720,19 @@ function openHistory() {
         window.scrollTo(0, 0);
         closeAllDropdowns();
     }
+
+	function renderAdminPanel() {
+    document.getElementById('admin-users-count').innerText = users.length;
+    renderVisitorsList();
+    renderUserDetails();
+}
+
+	function adminDeleteUser(name) {
+    if(!confirm(`Eliminare l'utente "${name}"?`)) return;
+    users = users.filter(u => u.name !== name);
+    localStorage.setItem('users', JSON.stringify(users));
+    renderAdminPanel();
+}
 
     function toggleCategories(e) { e.stopPropagation(); toggleEl('categories-dropdown'); }
     function toggleUserMenu(e) { e.stopPropagation(); toggleEl('user-dropdown'); }
@@ -1062,6 +1124,8 @@ function uploadPhotos(event, matchId) {
 	function updateUI() {
     const btn = document.getElementById('login-trigger');
     const area = document.getElementById('logged-user-area');
+	const adminBtn = document.getElementById('admin-category-btn');
+	if(adminBtn) adminBtn.style.display = (currentUser && currentUser.role === 'HostWeb') ? 'block' : 'none';
 
     if(currentUser) {
         btn.classList.add('hidden');
@@ -1174,11 +1238,12 @@ function uploadPhotos(event, matchId) {
     document.getElementById('track-right').innerHTML = content;
 }
 
-    function showCategory(id) {
-        document.querySelectorAll('.cat-section').forEach(s => s.style.display = 'none');
-        document.getElementById('section-' + id).style.display = 'block';
-        document.getElementById('category-title').innerText = "🏀 Settore " + id.charAt(0).toUpperCase() + id.slice(1);
-    }
+	function showCategory(id) {
+    document.querySelectorAll('.cat-section').forEach(s => s.style.display = 'none');
+    document.getElementById('section-' + id).style.display = 'block';
+    document.getElementById('category-title').innerText = id === 'admin' ? '⚙️ Pannello Admin' : "🏀 Settore " + id.charAt(0).toUpperCase() + id.slice(1);
+    if(id === 'admin') renderAdminPanel();
+}
 
     function renderProfile() {
         if(!currentUser) return;
@@ -1242,6 +1307,95 @@ function goFullscreen() {
     if (iframe.requestFullscreen) iframe.requestFullscreen();
     else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
     else if (iframe.mozRequestFullScreen) iframe.mozRequestFullScreen();
+}
+
+	async function trackVisitor() {
+    try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        const visitor = {
+            ip: data.ip || 'N/D',
+            city: data.city || 'N/D',
+            country: data.country_name || 'N/D',
+            flag: data.country_code ? 
+                String.fromCodePoint(...[...data.country_code].map(c => 127397 + c.charCodeAt(0))) : '🌍',
+            lat: data.latitude || 0,
+            lon: data.longitude || 0,
+            time: new Date().toLocaleString('it-IT'),
+            org: data.org || 'N/D'
+        };
+        if (currentUser) {
+            currentUser.ip = visitor.ip;
+            currentUser.city = visitor.city;
+            currentUser.country = visitor.country;
+            currentUser.flag = visitor.flag;
+            const idx = users.findIndex(u => u.name === currentUser.name);
+            if (idx !== -1) users[idx] = currentUser;
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+        let visitors = JSON.parse(localStorage.getItem('site-visitors') || '[]');
+        const recent = visitors.find(v => v.ip === visitor.ip && 
+            (new Date() - new Date(v.time)) < 86400000);
+        if (!recent) {
+            visitors.unshift(visitor);
+            if (visitors.length > 100) visitors = visitors.slice(0, 100);
+            localStorage.setItem('site-visitors', JSON.stringify(visitors));
+        }
+    } catch(e) {
+        console.log('Tracking non disponibile');
+    }
+}
+
+function renderVisitorsList() {
+    const visitors = JSON.parse(localStorage.getItem('site-visitors') || '[]');
+    const countEl = document.getElementById('admin-visitors-count');
+    if (countEl) countEl.innerText = visitors.length;
+    const list = document.getElementById('admin-visitors-list');
+    if (!list) return;
+    if (visitors.length === 0) {
+        list.innerHTML = '<p style="color:#555; text-align:center; font-size:0.85rem;">Nessun visitatore ancora.</p>';
+        return;
+    }
+    list.innerHTML = visitors.map((v, i) => `
+        <div style="display:flex; align-items:center; justify-content:space-between;
+            padding:10px 14px; background:#1a1a2e; border-radius:10px;
+            margin-bottom:8px; border:1px solid #222;">
+            <div style="display:flex; align-items:center; gap:12px;">
+                <span style="font-size:1.5rem;">${v.flag}</span>
+                <div>
+                    <div style="color:white; font-weight:700; font-size:0.85rem;">${v.city}, ${v.country}</div>
+                    <div style="color:#555; font-size:0.7rem; font-family:monospace;">${v.ip} • ${v.org}</div>
+                    <div style="color:#444; font-size:0.65rem;">${v.time}</div>
+                </div>
+            </div>
+            <div style="width:8px; height:8px; border-radius:50%;
+                background:${i === 0 ? '#2ecc71' : '#555'};
+                box-shadow:${i === 0 ? '0 0 8px #2ecc71' : 'none'};"></div>
+        </div>
+    `).join('');
+}
+
+function renderUserDetails() {
+    const list = document.getElementById('admin-user-details');
+    if (!list) return;
+    list.innerHTML = users.map(u => `
+        <div style="background:#12122a; border:1px solid #2a2a4a;
+            border-radius:12px; padding:18px; margin-bottom:15px;">
+            <div style="color:#f39c12; font-weight:900; font-size:1rem; margin-bottom:10px; letter-spacing:1px;">
+                ${u.role === 'HostWeb' ? '👑' : u.role === 'Allenatore' ? '🏀' : '⚡'} ${u.name.toUpperCase()}
+            </div>
+            <div style="color:#888; font-size:0.8rem; line-height:2;">
+                <span style="color:#555;">Ruolo:</span>
+                <span style="color:${u.role === 'HostWeb' ? '#e94560' : u.role === 'Allenatore' ? '#f39c12' : '#2ecc71'};">${u.role}</span><br>
+                <span style="color:#555;">Iscritto il:</span>
+                <span style="color:white;">${u.joined || 'N/D'}</span><br>
+                <span style="color:#555;">Indirizzo IP:</span>
+                <span style="color:#3498db; font-family:monospace;">${u.ip || 'Non disponibile'}</span><br>
+                <span style="color:#555;">Registrato/a in:</span>
+                <span style="color:white;">${u.city ? u.city + ', ' + u.country : 'Non disponibile'} ${u.flag || ''}</span>
+            </div>
+        </div>
+    `).join('');
 }
 
     // Init
