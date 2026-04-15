@@ -88,10 +88,11 @@
         .container { display: grid; grid-template-columns: 220px 1fr 220px; gap: 30px; padding: 30px 2%; max-width: 1600px; margin: auto; }
         
         /* --- SIDEBARS (ADS) --- */
-        .ads-sidebar { position: sticky; top: 115px; height: calc(100vh - 150px); overflow: hidden; border-radius: 20px; background: #eef2f5; border: 1px solid #e0e6ed; }
-        .ads-track { display: flex; flex-direction: column; gap: 20px; padding: 15px; animation: scrollAds 50s linear infinite; }
-        @keyframes scrollAds { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-        
+        /* --- SIDEBARS (ADS) --- */
+		.ads-sidebar { position: sticky; top: 115px; height: calc(100vh - 150px); overflow-y: auto; border-radius: 20px; background: #eef2f5; border: 1px solid #e0e6ed; scrollbar-width: none; }
+		.ads-sidebar::-webkit-scrollbar { display: none; }
+		.ads-track { display: flex; flex-direction: column; gap: 15px; padding: 15px; }
+		        
         .ad-card { 
             background: white; border-radius: 15px; overflow: hidden; border: 1px solid #ddd; 
             position: relative; height: 160px; display: block; text-decoration: none; transition: 0.3s;
@@ -1449,36 +1450,17 @@ function uploadPhotos(event, matchId) {
     `).join('');
 }
 
-    function renderAds() {
+	function renderAds() {
     const ads = [
-        {
-            n: "Lega Basket Serie A",
-            i: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=300",
-            url: "https://www.legabasket.it"
-        },
-        {
-            n: "Spalding Pro",
-            i: "https://images.unsplash.com/photo-1519861531158-286d946274e2?w=300",
-            url: "https://www.spalding.com"
-        },
-        {
-            n: "NBA Italia",
-            i: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300",
-            url: "https://www.nba.com"
-        },
-        {
-            n: "Nike Basketball",
-            i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300",
-            url: "https://www.nike.com/it/w/basket"
-        },
-        {
-            n: "FIP - Federazione Italiana Pallacanestro",
-            i: "https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=300",
-            url: "https://www.fip.it"
-        }
+        { n: "Lega Basket Serie A", i: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=300", url: "https://www.legabasket.it" },
+        { n: "Spalding Pro", i: "https://images.unsplash.com/photo-1519861531158-286d946274e2?w=300", url: "https://www.spalding.com" },
+        { n: "NBA Italia", i: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300", url: "https://www.nba.com" },
+        { n: "Nike Basketball", i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300", url: "https://www.nike.com/it/w/basket" },
+        { n: "FIP - Federazione Italiana Pallacanestro", i: "https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=300", url: "https://www.fip.it" }
     ];
 
-    const content = [...ads, ...ads, ...ads].map(a => `
+    // Solo 5 card fisse, nessuna duplicazione
+    const content = ads.map(a => `
         <a class="ad-card" href="${a.url}" target="_blank" rel="noopener noreferrer">
             <img src="${a.i}" alt="${a.n}">
             <div class="ad-label">${a.n}</div>
