@@ -528,25 +528,17 @@
   </p>
 
   <div style="background: white; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); position: relative;">
-    <!-- OVERLAY INVISIBILE che blocca i controlli -->
-    <div style="position: absolute; inset: 0; z-index: 10; cursor: default;" onclick="return false;"></div>
+    
+    <div id="live-overlay" style="position: absolute; inset: 0; z-index: 10; cursor: default;" onclick="return false;"></div>
 
-    <!-- PLAYER YOUTUBE -->
     <div style="position: relative; padding-bottom: 56.25%; height: 0; background: #000;">
-
-      <!-- MESSAGGIO "Nessuna trasmissione" -->
-      <div id="no-live-msg" style="
-        position: absolute; inset: 0; z-index: 20;
-        background: #000; display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 15px;
-      ">
-        <div style="width: 60px; height: 60px; border-radius: 50%; background: #222;
-          display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📡</div>
+      
+      <div id="no-live-msg" style="position: absolute; inset: 0; z-index: 20; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: #222; display: flex; align-items: center; justify-content: center; font-size: 1.8rem;">📡</div>
         <p style="color: white; font-size: 1.2rem; font-weight: 800;">Nessuna trasmissione per ora.</p>
         <p style="color: #666; font-size: 0.85rem;">Le dirette appariranno automaticamente qui.</p>
       </div>
 
-      <!-- IFRAME -->
       <iframe
         id="live-iframe"
         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none;"
@@ -555,6 +547,63 @@
       </iframe>
     </div>
   </div>
+</div>
+
+<script>
+  // Sostituisci con i tuoi dati reali
+ <script>
+  // INSERISCI QUI I TUOI DATI
+  const API_KEY = 'AIzaSyCnGMGo7rtputGJMMoswgbkSHRmMfD_G7Y'; 
+  const CHANNEL_ID = 'UCiTxqcvxMowB2TKgv_0RK3A'; // ID Mercede Basket
+
+  async function aggiornaLive() {
+    const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&type=video&eventType=live&key=${API_KEY}`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      const iframe = document.getElementById('live-iframe');
+      const noLiveMsg = document.getElementById('no-live-msg');
+      const overlay = document.getElementById('live-overlay'); // Assicurati che l'ID sia nel tuo HTML
+
+      if (data.items && data.items.length > 0) {
+        const videoId = data.items[0].id.videoId;
+        const liveSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
+        
+        if (iframe.src !== liveSrc) {
+            iframe.src = liveSrc;
+        }
+        
+        iframe.style.display = 'block';
+        noLiveMsg.style.display = 'none';
+        if(overlay) overlay.style.display = 'none'; 
+      } else {
+        iframe.src = '';
+        iframe.style.display = 'none';
+        noLiveMsg.style.display = 'flex';
+        if(overlay) overlay.style.display = 'block';
+      }
+    } catch (error) {
+      console.error("Errore API YouTube:", error);
+    }
+  }
+
+  // Controlla ogni 5 minuti
+  aggiornaLive();
+  setInterval(aggiornaLive, 300000);
+</script>
+
+</body> ```
+
+---
+
+### Cosa ho modificato per te:
+1.  **Gestione Overlay:** Ho aggiunto l'ID `live-overlay` al tuo div trasparente. Senza questa modifica, anche se la live apparisse, l'utente non potrebbe cliccarci sopra perché il div trasparente "coprirebbe" i tasti di YouTube. Ora lo script lo nasconde automaticamente quando c'è una live.
+2.  **Controllo SRC:** Ho aggiunto un piccolo controllo `if (iframe.src !== liveSrc)` per evitare che ogni 5 minuti il video si ricarichi da capo (sarebbe fastidioso per chi sta guardando).
+3.  **Posizionamento:** Come vedi, il tag `<script>` è proprio prima della fine del documento.
+
+**Promemoria rapido:** Se stai testando in locale (aprendo il file `.html` direttamente nel browser), a volte le chiamate API potrebbero essere bloccate per sicurezza. È sempre meglio testare caricando i file su un server o usando un ambiente locale come Live Server di VS Code.
 
   <!-- TASTO SCHERMO INTERO -->  
   <div style="text-align: right; margin-top: 10px;">
