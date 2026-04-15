@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mercede Basket Alghero - Official Portal v1.0</title>
-	<link rel="icon" type="image/x-icon" href="immagini/logomercede-nosfondo.png">
     <style>
         :root {
             --primary: #00468C;
@@ -88,6 +87,7 @@
         /* --- LAYOUT & CONTAINERS --- */
         .container { display: grid; grid-template-columns: 220px 1fr 220px; gap: 30px; padding: 30px 2%; max-width: 1600px; margin: auto; }
         
+        /* --- SIDEBARS (ADS) --- */
 		/* --- SIDEBARS (ADS) --- */
 		.ads-sidebar { position: sticky; top: 115px; height: calc(100vh - 150px); overflow-y: auto; border-radius: 20px; background: #eef2f5; border: 1px solid #e0e6ed; scrollbar-width: none; }
 		.ads-sidebar::-webkit-scrollbar { display: none; }
@@ -184,7 +184,7 @@
 <header>
     <div class="brand" onclick="navigateTo('home')">
         <div class="logo-box">
-            <img src="immagini/logomercede-nosfondo.png" alt="Mercede Logo" onerror="this.src='https://via.placeholder.com/60?text=MB'">
+            <img src="immagini/mercedeimage.jpg" alt="Mercede Logo" onerror="this.src='https://via.placeholder.com/60?text=MB'">
         </div>
         <b class="brand-name">Mercede Basket Alghero</b>
     </div>
@@ -554,16 +554,7 @@
         allowfullscreen>
       </iframe>
     </div>
-  </div> ```
-
----
-
-### Cosa ho modificato per te:
-1.  **Gestione Overlay:** Ho aggiunto l'ID `live-overlay` al tuo div trasparente. Senza questa modifica, anche se la live apparisse, l'utente non potrebbe cliccarci sopra perché il div trasparente "coprirebbe" i tasti di YouTube. Ora lo script lo nasconde automaticamente quando c'è una live.
-2.  **Controllo SRC:** Ho aggiunto un piccolo controllo `if (iframe.src !== liveSrc)` per evitare che ogni 5 minuti il video si ricarichi da capo (sarebbe fastidioso per chi sta guardando).
-3.  **Posizionamento:** Come vedi, il tag `<script>` è proprio prima della fine del documento.
-
-**Promemoria rapido:** Se stai testando in locale (aprendo il file `.html` direttamente nel browser), a volte le chiamate API potrebbero essere bloccate per sicurezza. È sempre meglio testare caricando i file su un server o usando un ambiente locale come Live Server di VS Code.
+  </div>
 
   <!-- TASTO SCHERMO INTERO -->  
   <div style="text-align: right; margin-top: 10px;">
@@ -1464,6 +1455,7 @@ function uploadPhotos(event, matchId) {
         { n: "Lega Basket Serie A", i: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=300", url: "https://www.legabasket.it" },
         { n: "Spalding Pro", i: "https://images.unsplash.com/photo-1519861531158-286d946274e2?w=300", url: "https://www.spalding.com" },
         { n: "NBA Italia", i: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300", url: "https://www.nba.com" },
+        { n: "Nike Basketball", i: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300", url: "https://www.nike.com/it/w/basket" },
         { n: "FIP - Federazione Italiana Pallacanestro", i: "https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=300", url: "https://www.fip.it" }
     ];
 
@@ -1924,7 +1916,7 @@ function launchAnim() {
 </script>
 </body>
 <footer>
-	<p style="text-align: center">&copy; <strong>Sito creato da Ezio. Tutti i diritti riservati. | [NOTA: se si trova qualcosa che non funziona/non scorre (es. pubblicità), ricaricare la pagina].</strong></p>
+	<p style="text-align: center">&copy; <strong>Sito creato da Ezio. Tutti i diritti riservati. | [NOTA: se la pubblicità di <u>SINISTRA</u> non scorre come quella di destra, ricaricare la pagina].</strong></p>
 	</footer>
 </html>
 
