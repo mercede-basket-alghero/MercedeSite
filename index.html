@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary: #00468C;
-            --primary-dark: #003366;
+            --primary-dark: #003366
             --accent: #fbc02d;
             --accent-hover: #f9a825;
             --light-bg: #f4f7f9;
@@ -528,13 +528,11 @@
   </p>
 
   <div style="background: white; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); position: relative;">
-    <!-- OVERLAY INVISIBILE che blocca i controlli -->
-    <div style="position: absolute; inset: 0; z-index: 10; cursor: default;" onclick="return false;"></div>
+    
+    <div id="live-overlay" style="position: absolute; inset: 0; z-index: 10; cursor: default;" onclick="return false;"></div>
 
-    <!-- PLAYER YOUTUBE -->
     <div style="position: relative; padding-bottom: 56.25%; height: 0; background: #000;">
 
-      <!-- MESSAGGIO "Nessuna trasmissione" -->
       <div id="no-live-msg" style="
         position: absolute; inset: 0; z-index: 20;
         background: #000; display: flex; flex-direction: column;
@@ -546,7 +544,6 @@
         <p style="color: #666; font-size: 0.85rem;">Le dirette appariranno automaticamente qui.</p>
       </div>
 
-      <!-- IFRAME -->
       <iframe
         id="live-iframe"
         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none;"
@@ -555,6 +552,48 @@
       </iframe>
     </div>
   </div>
+
+  <script>
+    // Uso una funzione anonima per evitare conflitti con altri script nel sito
+    (function() {
+      const KEY_API = 'AIzaSyCnGMGo7rtputGJMMoswgbkSHRmMfD_G7Y'; // <--- METTI LA TUA CHIAVE QUI
+      const ID_CANALE = 'UCiTxqcvxMowB2TKgv_0RK3A'; 
+
+      async function controllaStreaming() {
+        try {
+          const res = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${UCiTxqcvxMowB2TKgv_0RK3A}&type=video&eventType=live&key=${AIzaSyCnGMGo7rtputGJMMoswgbkSHRmMfD_G7Y}`);
+          const data = await res.json();
+
+          const frame = document.getElementById('live-iframe');
+          const messaggio = document.getElementById('no-live-msg');
+          const copertura = document.getElementById('live-overlay');
+
+          if (data.items && data.items.length > 0) {
+            const vId = data.items[0].id.videoId;
+            const nuovoUrl = `https://www.youtube.com/embed/${vId}?autoplay=1&mute=1`;
+            
+            if (frame.src !== nuovoUrl) frame.src = nuovoUrl;
+            
+            frame.style.display = 'block';
+            messaggio.style.display = 'none';
+            if (copertura) copertura.style.display = 'none';
+          } else {
+            frame.style.display = 'none';
+            frame.src = '';
+            messaggio.style.display = 'flex';
+            if (copertura) copertura.style.display = 'block';
+          }
+        } catch (err) {
+          console.warn("Rilevamento live YouTube non riuscito (controlla API Key)");
+        }
+      }
+
+      // Avvia il controllo e ripeti ogni 5 minuti
+      controllaStreaming();
+      setInterval(controllaStreaming, 300000);
+    })();
+  </script>
+</div>
 
   <!-- TASTO SCHERMO INTERO -->  
   <div style="text-align: right; margin-top: 10px;">
