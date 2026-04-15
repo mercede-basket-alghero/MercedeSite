@@ -88,10 +88,10 @@
         /* --- LAYOUT & CONTAINERS --- */
         .container { display: grid; grid-template-columns: 220px 1fr 220px; gap: 30px; padding: 30px 2%; max-width: 1600px; margin: auto; }
         
-        /* --- SIDEBARS (ADS) --- */
-        .ads-sidebar { position: sticky; top: 115px; height: calc(100vh - 150px); overflow: hidden; border-radius: 20px; background: #eef2f5; border: 1px solid #e0e6ed; }
-        .ads-track { display: flex; flex-direction: column; gap: 20px; padding: 15px; animation: scrollAds 50s linear infinite; }
-        @keyframes scrollAds { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+		/* --- SIDEBARS (ADS) --- */
+		.ads-sidebar { position: sticky; top: 115px; height: calc(100vh - 150px); overflow-y: auto; border-radius: 20px; background: #eef2f5; border: 1px solid #e0e6ed; scrollbar-width: none; }
+		.ads-sidebar::-webkit-scrollbar { display: none; }
+		.ads-track { display: flex; flex-direction: column; gap: 15px; padding: 15px; }
         
         .ad-card { 
             background: white; border-radius: 15px; overflow: hidden; border: 1px solid #ddd; 
