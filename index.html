@@ -1512,27 +1512,37 @@ function uploadPhotos(event, matchId) {
 	}
 
 	function checkLiveStatus() {
-		const iframe = document.getElementById('live-iframe');
-		const msg = document.getElementById('no-live-msg');
-		if (!iframe || !msg) return;
+    const iframe = document.getElementById('live-iframe');
+    const msg = document.getElementById('no-live-msg');
+    if (!iframe || !msg) return;
 
-		const channelId = 'UCiTxqcvxMowB2TKgv_0RK3A';
+    const API_KEY = 'AIzaSyBFwiia1oAOOWnRk0V1Cq27mtmlWMtHgcM';
+    const CHANNEL_ID = 'UCiTxqcvxMowB2TKgv_0RK3A';
 
-		const testImg = new Image();
-		testImg.onload = function() {
-			iframe.src = `https://www.youtube.com/embed/live_stream?channel=${channelId}&autoplay=1&controls=0&disablekb=1&modestbranding=1&rel=0&iv_load_policy=3`;
-			iframe.style.display = 'block';
-			msg.style.display = 'none';
-			document.getElementById('fullscreen-btn').style.display = 'inline-block';
-		};
-		testImg.onerror = function() {
-			iframe.src = '';
-			iframe.style.display = 'none';
-			msg.style.display = 'flex';
-			document.getElementById('fullscreen-btn').style.display = 'none';
-		};
-		testImg.src = `https://img.youtube.com/vi/${channelId}/maxresdefault.jpg?t=${Date.now()}`;
-	}
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data.items && data.items.length > 0) {
+            const videoId = data.items[0].id.videoId;
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&controls=1&modestbranding=1&rel=0`;
+            iframe.style.display = 'block';
+            msg.style.display = 'none';
+            document.getElementById('fullscreen-btn').style.display = 'inline-block';
+        } else {
+            iframe.src = '';
+            iframe.style.display = 'none';
+            msg.style.display = 'flex';
+            document.getElementById('fullscreen-btn').style.display = 'none';
+        }
+    })
+    .catch(err => {
+        console.error("Errore controllo live:", err);
+        iframe.src = '';
+        iframe.style.display = 'none';
+        msg.style.display = 'flex';
+        document.getElementById('fullscreen-btn').style.display = 'none';
+    });
+}
 
 function goFullscreen() {
     const iframe = document.getElementById('live-iframe');
