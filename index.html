@@ -1699,6 +1699,26 @@ function renderUserDetails() {
     renderAds();
 	updateUI();
 	trackVisitor();
+
+	// --- ROTAZIONE GIF SFONDO ---
+	const bgGifs = [
+	    'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHh2ZzRuYmxwNXc5ZjFneHE5emFjaDNydnVvdWl3Z2RlZ2plN2tpdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3upXBfSi6erok/giphy.gif',
+	    'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGpqZWc5aGJ4NmcyMXpuaXN1emp3cDZscnl1YjAxdDdvemZqNnJvYiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rBVM213ASKBIk/giphy.gif',
+	    'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG5vazQzbDB5Zm96NDNuanVzeTRxNDlxaDZ5OW1vdzk3Y3JvNXBlYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEdv5e5Zd2gsczAhG/giphy.gif',
+	    'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzhzNmJwdGJ2bzE5cmxsN3d4cXNrbHdveXprYjVmdnZ1OG9nZzVxciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Zt4SlNHjviHxr3O/giphy.gif',
+	    'https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExMDl1Mm8xNGZ6MGM1bGhranUxbjhnZWQzdHJlNG11em9waXl5ZzljMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3oEjHZUMt0BfGkPuIU/giphy.gif',
+	    'https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExYWo0NDBjemFraWp0bG1xemppdGY2ZHc0aThhcXh0OXI4bnlnMW91MiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o72F93I0BhqFXAdi0/giphy.gif'
+	];
+
+	let currentBg = Math.floor(Math.random() * bgGifs.length);
+	document.body.style.backgroundImage = `url('${bgGifs[currentBg]}')`;
+	
+	setInterval(() => {
+	    currentBg = (currentBg + 1) % bgGifs.length;
+	    document.body.style.transition = 'background-image 1s ease';
+	    document.body.style.backgroundImage = `url('${bgGifs[currentBg]}')`;
+	}, 8000);
+		
 </script>
 
 	<!-- ===== MERCEDEBOT ===== -->
