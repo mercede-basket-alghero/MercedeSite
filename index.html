@@ -120,18 +120,25 @@
             text-align: center; box-shadow: var(--shadow);
         }
     	.hero-banner h1 { 
-	    font-size: 4.5rem; 
-	    font-weight: 900; 
-	    margin-bottom: 10px; 
-	    font-family: 'Bebas Neue', sans-serif;
-	    background: linear-gradient(180deg, #fff5a0 0%, #ffd700 30%, #ff9500 60%, #b85c00 100%);
-	    -webkit-background-clip: text;
-	    -webkit-text-fill-color: transparent;
-	    background-clip: text;
-	    text-shadow: none;
-	    filter: drop-shadow(3px 3px 0px #7a3800) drop-shadow(6px 6px 8px rgba(0,0,0,0.6));
-	    letter-spacing: 4px;
-	}
+    font-size: 4.5rem; 
+    font-weight: 900; 
+    margin-bottom: 10px; 
+    font-family: 'Bebas Neue', sans-serif;
+    background: linear-gradient(180deg, 
+        #c0c0c0 0%,      /* argento chiaro in cima */
+        #f5f5f5 20%,     /* bianco argento */
+        #a8a8a8 40%,     /* argento medio */
+        #ffd700 55%,     /* oro */
+        #c8960a 75%,     /* oro scuro */
+        #8B6914 100%     /* oro bronzato in fondo */
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(2px 2px 0px #3a2a00) drop-shadow(4px 4px 6px rgba(0,0,0,0.5));
+    letter-spacing: 4px;
+}
         .hero-banner p { font-size: 1.2rem; font-weight: 500; opacity: 0.9; letter-spacing: 2px; }
 
         /* --- CALENDAR SYSTEM --- */
