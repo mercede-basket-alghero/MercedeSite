@@ -688,29 +688,17 @@
     <p style="color: var(--gray); margin-bottom: 25px; font-size: 0.9rem;">
         Pannello di gestione live — solo Allenatore.
     </p>
-
-    <!-- MIXER AUDIO -->
     <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
         <h3 style="color:var(--primary); margin-bottom:20px;">🎚️ Mixer Audio</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
             <div>
                 <label style="font-weight:700; font-size:0.85rem; color:var(--gray);">🎙️ MICROFONO (Entrata)</label>
-                <select id="mic-select" style="margin:8px 0;" onchange="cambiaMicrofono()">
-                    <option value="">Seleziona microfono...</option>
-                </select>
-                <input type="range" id="mic-volume" min="0" max="100" value="80"
-                    oninput="updateMicVolume(this.value)"
-                    style="width:100%; margin:5px 0; accent-color:var(--primary);">
+                <input type="range" id="mic-volume" min="0" max="100" value="80" oninput="updateMicVolume(this.value)" style="width:100%; margin:10px 0; accent-color:var(--primary);">
                 <span id="mic-vol-label" style="font-size:0.8rem; color:var(--primary); font-weight:800;">80%</span>
             </div>
             <div>
                 <label style="font-weight:700; font-size:0.85rem; color:var(--gray);">🔊 AUDIO (Uscita)</label>
-                <select id="out-select" style="margin:8px 0;" onchange="cambiaUscita()">
-                    <option value="">Seleziona uscita audio...</option>
-                </select>
-                <input type="range" id="out-volume" min="0" max="100" value="100"
-                    oninput="updateOutVolume(this.value)"
-                    style="width:100%; margin:5px 0; accent-color:var(--primary);">
+                <input type="range" id="out-volume" min="0" max="100" value="100" oninput="updateOutVolume(this.value)" style="width:100%; margin:10px 0; accent-color:var(--primary);">
                 <span id="out-vol-label" style="font-size:0.8rem; color:var(--primary); font-weight:800;">100%</span>
             </div>
         </div>
@@ -720,35 +708,6 @@
         </div>
         <canvas id="audio-visualizer" height="60" style="width:100%; margin-top:15px; border-radius:10px; background:#f0f4fa;"></canvas>
     </div>
-
-    <!-- PIATTAFORMA STREAMING -->
-    <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
-        <h3 style="color:var(--primary); margin-bottom:20px;">📡 Piattaforma Streaming</h3>
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-            <select id="piattaforma-select" onchange="selezionaPiattaforma()" style="width:250px; margin:0;">
-                <option value="">Seleziona Piattaforma Streaming...</option>
-                <option value="youtube">▶️ YouTube</option>
-                <option value="twitch">🟣 Twitch</option>
-                <option value="x">✖️ X (Twitter)</option>
-            </select>
-            <div id="link-live-box" style="display:none; flex:1; display:none;">
-                <input type="text" id="link-live-input" placeholder="Incolla il link della live..." style="margin:0;">
-            </div>
-            <button id="carica-live-btn" onclick="caricaLiveMStudio()" style="display:none;
-                background:var(--danger); color:white; border:none; border-radius:12px;
-                padding:14px 20px; font-weight:800; cursor:pointer; font-size:0.85rem; white-space:nowrap;">
-                🔴 Carica Live
-            </button>
-        </div>
-        <!-- PLAYER LIVE -->
-        <div id="mstudio-player-box" style="display:none; margin-top:20px;">
-            <div style="position:relative; padding-bottom:56.25%; height:0; background:#000; border-radius:15px; overflow:hidden;">
-                <iframe id="mstudio-iframe" style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- CATTURA SCHERMO -->
     <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
         <h3 style="color:var(--primary); margin-bottom:20px;">🖥️ Cattura Schermo</h3>
         <div style="display:flex; gap:10px; margin-bottom:15px;">
@@ -757,22 +716,8 @@
         </div>
         <video id="screen-preview" autoplay muted style="width:100%; border-radius:12px; background:#000; display:none; max-height:300px; object-fit:contain;"></video>
     </div>
-
-    <!-- REGISTRAZIONE -->
     <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
         <h3 style="color:var(--primary); margin-bottom:20px;">⏺️ Registrazione</h3>
-
-        <!-- CHECKBOX MANTIENI LIVE -->
-        <div id="mantieni-live-box" style="display:none; background:#f0f7ff; border-radius:12px; padding:15px; margin-bottom:15px; border:1px solid #cce0ff;">
-            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-weight:700; font-size:0.9rem;">
-                <input type="checkbox" id="mantieni-live-check" style="width:20px; height:20px; margin:0; cursor:pointer; accent-color:var(--primary);">
-                <span id="mantieni-live-label">Mantieni live per la registrazione</span>
-            </label>
-            <p style="font-size:0.75rem; color:var(--gray); margin-top:8px; margin-left:30px;">
-                Se spuntato, la registrazione includerà automaticamente la live della piattaforma selezionata.
-            </p>
-        </div>
-
         <div style="display:flex; gap:10px; margin-bottom:15px; align-items:center;">
             <button onclick="avviaRegistrazione()" id="rec-start-btn" style="flex:1; padding:12px; border:none; border-radius:12px; background:var(--danger); color:white; font-weight:800; cursor:pointer; font-size:0.85rem;">⏺️ Avvia Registrazione</button>
             <button onclick="fermaRegistrazione()" id="rec-stop-btn" style="flex:1; padding:12px; border:none; border-radius:12px; background:#555; color:white; font-weight:800; cursor:pointer; font-size:0.85rem;" disabled>⏹ Ferma e Scarica</button>
@@ -939,10 +884,8 @@ function openHistory() {
         if(viewId === 'profile') renderProfile();
 		if(viewId === 'live') checkLiveStatus();
 		if(viewId === 'mstudio') {
-	    if(!currentUser || currentUser.role !== 'Allenatore') { navigateTo('home'); return; }
-    	setTimeout(caricaDispositivi, 300);
+    	if(!currentUser || currentUser.role !== 'Allenatore') { navigateTo('home'); return; }
 	}
-		}
         if(viewId === 'login') {
 			document.getElementById('l-name').value = '';
 			document.getElementById('l-pass').value = '';
@@ -1904,12 +1847,10 @@ function renderUserDetails() {
 	updateUI();
 	trackVisitor();
 
-// --- MSTUDIO ---
+	// --- MSTUDIO ---
 let micStream = null, screenStream = null, audioCtx = null;
 let mediaRecorder = null, recordedChunks = [], recInterval = null, recSeconds = 0;
 let micMuted = false, audioMuted = false;
-let piattaformaSelezionata = '';
-let recIdCounter = 0;
 
 function handleLiveClick(e) {
     e.stopPropagation();
@@ -1917,54 +1858,6 @@ function handleLiveClick(e) {
         toggleEl('live-dropdown');
     } else {
         navigateTo('live');
-    }
-}
-
-// Carica dispositivi audio disponibili
-async function caricaDispositivi() {
-    try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const micSel = document.getElementById('mic-select');
-        const outSel = document.getElementById('out-select');
-        if (!micSel || !outSel) return;
-
-        micSel.innerHTML = '<option value="">Seleziona microfono...</option>';
-        outSel.innerHTML = '<option value="">Seleziona uscita audio...</option>';
-
-        devices.forEach(d => {
-            if (d.kind === 'audioinput') {
-                micSel.innerHTML += `<option value="${d.deviceId}">${d.label || 'Microfono ' + micSel.options.length}</option>`;
-            }
-            if (d.kind === 'audiooutput') {
-                outSel.innerHTML += `<option value="${d.deviceId}">${d.label || 'Uscita ' + outSel.options.length}</option>`;
-            }
-        });
-    } catch(e) {
-        console.log('Dispositivi non disponibili:', e);
-    }
-}
-
-async function cambiaMicrofono() {
-    const deviceId = document.getElementById('mic-select').value;
-    if (!deviceId) return;
-    try {
-        if (micStream) micStream.getTracks().forEach(t => t.stop());
-        micStream = await navigator.mediaDevices.getUserMedia({ audio: { deviceId: { exact: deviceId } } });
-        avviaVisualizer(micStream);
-    } catch(e) {
-        alert('Errore selezione microfono: ' + e.message);
-    }
-}
-
-async function cambiaUscita() {
-    const deviceId = document.getElementById('out-select').value;
-    if (!deviceId) return;
-    const videos = document.querySelectorAll('video');
-    for (const v of videos) {
-        if (v.setSinkId) {
-            try { await v.setSinkId(deviceId); } catch(e) {}
-        }
     }
 }
 
@@ -1995,50 +1888,6 @@ function toggleAudio() {
     btn.innerText = audioMuted ? '🔊 Audio OFF' : '🔊 Audio ON';
 }
 
-function selezionaPiattaforma() {
-    piattaformaSelezionata = document.getElementById('piattaforma-select').value;
-    const linkBox = document.getElementById('link-live-box');
-    const caricaBtn = document.getElementById('carica-live-btn');
-    const mantieniBox = document.getElementById('mantieni-live-box');
-    const mantieniLabel = document.getElementById('mantieni-live-label');
-
-    if (piattaformaSelezionata) {
-        linkBox.style.display = 'block';
-        caricaBtn.style.display = 'inline-block';
-        mantieniBox.style.display = 'block';
-        const nomi = { youtube: 'YouTube', twitch: 'Twitch', x: 'X (Twitter)' };
-        mantieniLabel.innerText = `Mantieni live di ${nomi[piattaformaSelezionata]} per la registrazione`;
-    } else {
-        linkBox.style.display = 'none';
-        caricaBtn.style.display = 'none';
-        mantieniBox.style.display = 'none';
-    }
-}
-
-function caricaLiveMStudio() {
-    const url = document.getElementById('link-live-input').value.trim();
-    if (!url) { alert('Incolla un link valido!'); return; }
-
-    let embedUrl = null;
-
-    if (piattaformaSelezionata === 'youtube') {
-        const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-        if (m) embedUrl = `https://www.youtube.com/embed/${m[1]}?autoplay=1&controls=1`;
-    } else if (piattaformaSelezionata === 'twitch') {
-        const m = url.match(/twitch\.tv\/([a-zA-Z0-9_]+)/);
-        if (m) embedUrl = `https://player.twitch.tv/?channel=${m[1]}&parent=mercede-basket-alghero.github.io`;
-    } else if (piattaformaSelezionata === 'x') {
-        embedUrl = url;
-    }
-
-    if (!embedUrl) { alert('Link non riconosciuto!'); return; }
-
-    const iframe = document.getElementById('mstudio-iframe');
-    const box = document.getElementById('mstudio-player-box');
-    iframe.src = embedUrl;
-    box.style.display = 'block';
-}
-
 async function avviaSchermo() {
     try {
         screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
@@ -2050,7 +1899,7 @@ async function avviaSchermo() {
             avviaVisualizer(micStream);
         }
     } catch(e) {
-        alert('Impossibile avviare la cattura schermo: ' + e.message);
+        alert("Impossibile avviare la cattura schermo: " + e.message);
     }
 }
 
@@ -2065,14 +1914,12 @@ function fermaSchermo() {
 }
 
 function avviaVisualizer(stream) {
-    if (audioCtx) audioCtx.close();
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioCtx.createMediaStreamSource(stream);
     const analyser = audioCtx.createAnalyser();
     analyser.fftSize = 256;
     source.connect(analyser);
     const canvas = document.getElementById('audio-visualizer');
-    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -2095,36 +1942,22 @@ function avviaVisualizer(stream) {
 
 async function avviaRegistrazione() {
     try {
-        const mantieniCheck = document.getElementById('mantieni-live-check');
-        const usaLive = mantieniCheck && mantieniCheck.checked;
-
         const streams = [];
-
-        if (usaLive) {
-            // Usa la live della piattaforma — registra lo schermo con audio
-            const liveStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
-            streams.push(liveStream);
-        } else {
-            if (screenStream) streams.push(screenStream);
-        }
-
+        if (screenStream) streams.push(screenStream);
         if (!micStream) {
             micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
             avviaVisualizer(micStream);
         }
         streams.push(micStream);
-
         const combined = new MediaStream([...streams.flatMap(s => s.getTracks())]);
         recordedChunks = [];
         mediaRecorder = new MediaRecorder(combined);
         mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
         mediaRecorder.onstop = salvaRegistrazione;
         mediaRecorder.start();
-
         document.getElementById('rec-start-btn').disabled = true;
         document.getElementById('rec-stop-btn').disabled = false;
-        document.getElementById('rec-status').innerText = usaLive ? '🔴 Registrazione live in corso...' : '🔴 Registrazione in corso...';
-
+        document.getElementById('rec-status').innerText = '🔴 Registrazione in corso...';
         recSeconds = 0;
         recInterval = setInterval(() => {
             recSeconds++;
@@ -2133,7 +1966,7 @@ async function avviaRegistrazione() {
             document.getElementById('rec-timer').innerText = `${m}:${s}`;
         }, 1000);
     } catch(e) {
-        alert('Errore avvio registrazione: ' + e.message);
+        alert("Errore avvio registrazione: " + e.message);
     }
 }
 
@@ -2146,6 +1979,8 @@ function fermaRegistrazione() {
         document.getElementById('rec-status').innerText = '✅ Registrazione completata!';
     }
 }
+
+let recIdCounter = 0;
 
 function salvaRegistrazione() {
     const blob = new Blob(recordedChunks, { type: 'video/webm' });
@@ -2465,4 +2300,3 @@ function launchAnim() {
 	</footer>
 </body>
 </html>
-
