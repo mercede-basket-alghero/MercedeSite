@@ -267,7 +267,13 @@
 </div>
         <span class="nav-item" onclick="navigateTo('location')"><strong><u>Posizione</u></strong></span>
         <span class="nav-item" onclick="navigateTo('news')"><strong><u>News</u></strong></span>
-		<span class="nav-item" onclick="navigateTo('live')"><strong>🔴 <u>Dirette Live</u></strong></span>
+		<div style="position: relative; display: flex; align-items: center;">
+    <span class="nav-item" id="live-nav-btn" onclick="handleLiveClick(event)"><strong>🔴 <u>Dirette Live</u></strong></span>
+    <div class="user-dropdown" id="live-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
+        <span onclick="navigateTo('live'); closeAllDropdowns()">🔴 Dirette Live</span>
+        <span id="mstudio-btn" onclick="navigateTo('mstudio'); closeAllDropdowns()">🎬 MStudio</span>
+    </div>
+</div>
     </nav>
     
     <div class="header-right">
@@ -612,6 +618,7 @@
     </div>
     <p id="live-status-msg" style="margin-top:10px; font-size:0.8rem; color:var(--gray);"></p>
   </div>
+	
 
   <div style="background: white; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); position: relative;">
     <!-- OVERLAY INVISIBILE che blocca i controlli -->
@@ -676,6 +683,51 @@
   </div>
 </div>
 
+<div id="page-mstudio" class="view hidden">
+    <h2 style="color: var(--primary); margin-bottom: 10px;">🎬 MStudio</h2>
+    <p style="color: var(--gray); margin-bottom: 25px; font-size: 0.9rem;">
+        Pannello di gestione live — solo Allenatore.
+    </p>
+    <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
+        <h3 style="color:var(--primary); margin-bottom:20px;">🎚️ Mixer Audio</h3>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+            <div>
+                <label style="font-weight:700; font-size:0.85rem; color:var(--gray);">🎙️ MICROFONO (Entrata)</label>
+                <input type="range" id="mic-volume" min="0" max="100" value="80" oninput="updateMicVolume(this.value)" style="width:100%; margin:10px 0; accent-color:var(--primary);">
+                <span id="mic-vol-label" style="font-size:0.8rem; color:var(--primary); font-weight:800;">80%</span>
+            </div>
+            <div>
+                <label style="font-weight:700; font-size:0.85rem; color:var(--gray);">🔊 AUDIO (Uscita)</label>
+                <input type="range" id="out-volume" min="0" max="100" value="100" oninput="updateOutVolume(this.value)" style="width:100%; margin:10px 0; accent-color:var(--primary);">
+                <span id="out-vol-label" style="font-size:0.8rem; color:var(--primary); font-weight:800;">100%</span>
+            </div>
+        </div>
+        <div style="margin-top:15px; display:flex; gap:10px;">
+            <button onclick="toggleMic()" id="mic-btn" style="flex:1; padding:12px; border:none; border-radius:12px; background:var(--primary); color:white; font-weight:800; cursor:pointer; font-size:0.85rem;">🎙️ Microfono ON</button>
+            <button onclick="toggleAudio()" id="audio-btn" style="flex:1; padding:12px; border:none; border-radius:12px; background:var(--primary); color:white; font-weight:800; cursor:pointer; font-size:0.85rem;">🔊 Audio ON</button>
+        </div>
+        <canvas id="audio-visualizer" height="60" style="width:100%; margin-top:15px; border-radius:10px; background:#f0f4fa;"></canvas>
+    </div>
+    <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
+        <h3 style="color:var(--primary); margin-bottom:20px;">🖥️ Cattura Schermo</h3>
+        <div style="display:flex; gap:10px; margin-bottom:15px;">
+            <button onclick="avviaSchermo()" style="flex:1; padding:12px; border:none; border-radius:12px; background:var(--primary); color:white; font-weight:800; cursor:pointer; font-size:0.85rem;">🖥️ Avvia Cattura</button>
+            <button onclick="fermaSchermo()" style="flex:1; padding:12px; border:none; border-radius:12px; background:#555; color:white; font-weight:800; cursor:pointer; font-size:0.85rem;">⏹ Ferma</button>
+        </div>
+        <video id="screen-preview" autoplay muted style="width:100%; border-radius:12px; background:#000; display:none; max-height:300px; object-fit:contain;"></video>
+    </div>
+    <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow); margin-bottom:20px;">
+        <h3 style="color:var(--primary); margin-bottom:20px;">⏺️ Registrazione</h3>
+        <div style="display:flex; gap:10px; margin-bottom:15px; align-items:center;">
+            <button onclick="avviaRegistrazione()" id="rec-start-btn" style="flex:1; padding:12px; border:none; border-radius:12px; background:var(--danger); color:white; font-weight:800; cursor:pointer; font-size:0.85rem;">⏺️ Avvia Registrazione</button>
+            <button onclick="fermaRegistrazione()" id="rec-stop-btn" style="flex:1; padding:12px; border:none; border-radius:12px; background:#555; color:white; font-weight:800; cursor:pointer; font-size:0.85rem;" disabled>⏹ Ferma e Scarica</button>
+            <div id="rec-timer" style="font-size:1.2rem; font-weight:900; color:var(--danger); font-family:monospace; min-width:60px; text-align:center;">00:00</div>
+        </div>
+        <div id="rec-status" style="font-size:0.8rem; color:var(--gray);"></div>
+        <div id="rec-downloads" style="margin-top:15px;"></div>
+    </div>
+</div>
+		
 <style>
 @keyframes pulse-red {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -831,6 +883,9 @@ function openHistory() {
         if(viewId === 'news') renderNews();
         if(viewId === 'profile') renderProfile();
 		if(viewId === 'live') checkLiveStatus();
+		if(viewId === 'mstudio') {
+	    if(!currentUser || currentUser.role !== 'Allenatore') { navigateTo('home'); return; }
+		}
         if(viewId === 'login') {
 			document.getElementById('l-name').value = '';
 			document.getElementById('l-pass').value = '';
@@ -1792,6 +1847,154 @@ function renderUserDetails() {
 	updateUI();
 	trackVisitor();
 
+	// --- MSTUDIO ---
+let micStream = null, screenStream = null, audioCtx = null;
+let mediaRecorder = null, recordedChunks = [], recInterval = null, recSeconds = 0;
+let micMuted = false, audioMuted = false;
+
+function handleLiveClick(e) {
+    e.stopPropagation();
+    if (currentUser && currentUser.role === 'Allenatore') {
+        toggleEl('live-dropdown');
+    } else {
+        navigateTo('live');
+    }
+}
+
+function updateMicVolume(val) {
+    document.getElementById('mic-vol-label').innerText = val + '%';
+}
+
+function updateOutVolume(val) {
+    document.getElementById('out-vol-label').innerText = val + '%';
+    const videos = document.querySelectorAll('video');
+    videos.forEach(v => v.volume = val / 100);
+}
+
+function toggleMic() {
+    const btn = document.getElementById('mic-btn');
+    micMuted = !micMuted;
+    if (micStream) micStream.getAudioTracks().forEach(t => t.enabled = !micMuted);
+    btn.style.background = micMuted ? '#d32f2f' : 'var(--primary)';
+    btn.innerText = micMuted ? '🎙️ Microfono OFF' : '🎙️ Microfono ON';
+}
+
+function toggleAudio() {
+    const btn = document.getElementById('audio-btn');
+    audioMuted = !audioMuted;
+    const videos = document.querySelectorAll('video');
+    videos.forEach(v => v.muted = audioMuted);
+    btn.style.background = audioMuted ? '#d32f2f' : 'var(--primary)';
+    btn.innerText = audioMuted ? '🔊 Audio OFF' : '🔊 Audio ON';
+}
+
+async function avviaSchermo() {
+    try {
+        screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+        const preview = document.getElementById('screen-preview');
+        preview.srcObject = screenStream;
+        preview.style.display = 'block';
+        if (!micStream) {
+            micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            avviaVisualizer(micStream);
+        }
+    } catch(e) {
+        alert("Impossibile avviare la cattura schermo: " + e.message);
+    }
+}
+
+function fermaSchermo() {
+    if (screenStream) {
+        screenStream.getTracks().forEach(t => t.stop());
+        screenStream = null;
+        const preview = document.getElementById('screen-preview');
+        preview.srcObject = null;
+        preview.style.display = 'none';
+    }
+}
+
+function avviaVisualizer(stream) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const source = audioCtx.createMediaStreamSource(stream);
+    const analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    source.connect(analyser);
+    const canvas = document.getElementById('audio-visualizer');
+    const ctx = canvas.getContext('2d');
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    function draw() {
+        requestAnimationFrame(draw);
+        analyser.getByteFrequencyData(dataArray);
+        ctx.fillStyle = '#f0f4fa';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const barWidth = (canvas.width / bufferLength) * 2.5;
+        let x = 0;
+        for (let i = 0; i < bufferLength; i++) {
+            const barHeight = (dataArray[i] / 255) * canvas.height;
+            ctx.fillStyle = `rgba(0,70,140,${dataArray[i]/255})`;
+            ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+            x += barWidth + 1;
+        }
+    }
+    draw();
+}
+
+async function avviaRegistrazione() {
+    try {
+        const streams = [];
+        if (screenStream) streams.push(screenStream);
+        if (!micStream) {
+            micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            avviaVisualizer(micStream);
+        }
+        streams.push(micStream);
+        const combined = new MediaStream([...streams.flatMap(s => s.getTracks())]);
+        recordedChunks = [];
+        mediaRecorder = new MediaRecorder(combined);
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0) recordedChunks.push(e.data); };
+        mediaRecorder.onstop = salvaRegistrazione;
+        mediaRecorder.start();
+        document.getElementById('rec-start-btn').disabled = true;
+        document.getElementById('rec-stop-btn').disabled = false;
+        document.getElementById('rec-status').innerText = '🔴 Registrazione in corso...';
+        recSeconds = 0;
+        recInterval = setInterval(() => {
+            recSeconds++;
+            const m = String(Math.floor(recSeconds / 60)).padStart(2, '0');
+            const s = String(recSeconds % 60).padStart(2, '0');
+            document.getElementById('rec-timer').innerText = `${m}:${s}`;
+        }, 1000);
+    } catch(e) {
+        alert("Errore avvio registrazione: " + e.message);
+    }
+}
+
+function fermaRegistrazione() {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+        mediaRecorder.stop();
+        clearInterval(recInterval);
+        document.getElementById('rec-start-btn').disabled = false;
+        document.getElementById('rec-stop-btn').disabled = true;
+        document.getElementById('rec-status').innerText = '✅ Registrazione completata!';
+    }
+}
+
+function salvaRegistrazione() {
+    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+    const url = URL.createObjectURL(blob);
+    const now = new Date();
+    const nome = `Mercede_${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}_${now.getHours()}-${now.getMinutes()}.webm`;
+    const div = document.getElementById('rec-downloads');
+    div.innerHTML += `
+        <div style="display:flex; align-items:center; gap:10px; padding:10px; background:#f0f7ff; border-radius:10px; margin-top:10px;">
+            <span style="font-size:1.2rem;">🎬</span>
+            <span style="flex:1; font-size:0.85rem; font-weight:700;">${nome}</span>
+            <a href="${url}" download="${nome}" style="background:var(--primary); color:white; padding:8px 16px; border-radius:8px; font-size:0.8rem; font-weight:800; text-decoration:none;">⬇️ Scarica</a>
+        </div>
+    `;
+}
+	
 	// --- ROTAZIONE GIF SFONDO ---
 	const bgGifs = [
 	    'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHh2ZzRuYmxwNXc5ZjFneHE5emFjaDNydnVvdWl3Z2RlZ2plN2tpdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3upXBfSi6erok/giphy.gif',
