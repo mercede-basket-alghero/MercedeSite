@@ -1980,17 +1980,21 @@ function fermaRegistrazione() {
     }
 }
 
+let recIdCounter = 0;
+
 function salvaRegistrazione() {
     const blob = new Blob(recordedChunks, { type: 'video/webm' });
     const url = URL.createObjectURL(blob);
     const now = new Date();
     const nome = `Mercede_${now.getDate()}-${now.getMonth()+1}-${now.getFullYear()}_${now.getHours()}-${now.getMinutes()}.webm`;
+    const id = 'rec-' + (recIdCounter++);
     const div = document.getElementById('rec-downloads');
     div.innerHTML += `
-        <div style="display:flex; align-items:center; gap:10px; padding:10px; background:#f0f7ff; border-radius:10px; margin-top:10px;">
+        <div id="${id}" style="display:flex; align-items:center; gap:10px; padding:10px; background:#f0f7ff; border-radius:10px; margin-top:10px;">
             <span style="font-size:1.2rem;">🎬</span>
             <span style="flex:1; font-size:0.85rem; font-weight:700;">${nome}</span>
             <a href="${url}" download="${nome}" style="background:var(--primary); color:white; padding:8px 16px; border-radius:8px; font-size:0.8rem; font-weight:800; text-decoration:none;">⬇️ Scarica</a>
+            <button onclick="document.getElementById('${id}').remove()" style="background:#ffebeb; color:red; border:none; border-radius:8px; width:34px; height:34px; font-size:1rem; cursor:pointer; font-weight:900;">✕</button>
         </div>
     `;
 }
