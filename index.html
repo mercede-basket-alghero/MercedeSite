@@ -59,15 +59,14 @@
             padding: 0 5%; position: sticky; top: 0; z-index: 2000; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
-        .brand { flex: 1; display: flex; align-items: center; gap: 15px; cursor: pointer; }
-        .logo-box { 
-            width: 55px; height: 55px; border-radius: 50%; overflow: hidden; 
-            display: flex; align-items: center; justify-content: center; 
-            background: white; border: 2px solid var(--accent); transition: var(--transition);
-        }
-        .logo-box:hover { transform: rotate(10deg) scale(1.1); }
-        .logo-box img { max-width: 85%; height: auto; }
-        .brand-name { font-size: 1.2rem; letter-spacing: -0.5px; }
+		.brand { flex: 0.6; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+		.logo-box { 
+		    width: 38px; height: 38px; border-radius: 50%; overflow: hidden; 
+		    display: flex; align-items: center; justify-content: center; 
+		    background: white; border: 2px solid var(--accent); transition: var(--transition);
+		}
+		.logo-box img { max-width: 85%; height: auto; }
+		.brand-name { font-size: 0.85rem; letter-spacing: -0.3px; }
 
         .nav-links { flex: 3; display: flex; gap: 20px; justify-content: center; align-items: center; }
         .nav-item { 
@@ -272,6 +271,13 @@
     <div class="user-dropdown" id="live-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
         <span onclick="navigateTo('live'); closeAllDropdowns()">🔴 Dirette Live</span>
         <span id="mstudio-btn" onclick="navigateTo('mstudio'); closeAllDropdowns()">🎬 MStudio</span>
+    </div>
+</div>
+		<div style="position: relative; display: flex; align-items: center;">
+    <span class="nav-item" onclick="togglePuntiBalla(event)"><strong>🏀 <u>Punti Palla</u></strong></span>
+    <div class="user-dropdown" id="puntiballa-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
+        <span onclick="navigateTo('miei-punti'); closeAllDropdowns()">🏀 I tuoi Punti Palla</span>
+        <span onclick="navigateTo('classifica'); closeAllDropdowns()">🏆 Classifica Punti</span>
     </div>
 </div>
     </nav>
@@ -727,6 +733,67 @@
         <div id="rec-downloads" style="margin-top:15px;"></div>
     </div>
 </div>
+
+<!-- PAGINA I TUOI PUNTI PALLA -->
+<div id="page-miei-punti" class="view hidden">
+    <h2 style="color: var(--primary); margin-bottom: 25px;">🏀 I tuoi Punti Palla</h2>
+    <div style="background:white; border-radius:20px; padding:40px; box-shadow:var(--shadow); text-align:center; max-width:500px; margin:0 auto;">
+        <div style="font-size:5rem; margin-bottom:10px;">🏀</div>
+        <h2 id="pp-username" style="color:var(--primary); font-size:1.5rem; margin-bottom:5px;"></h2>
+        <div id="pp-count" style="font-size:4rem; font-weight:900; color:var(--accent); margin:20px 0;">0</div>
+        <p style="color:var(--gray); font-size:0.9rem;">Punti Palla totali</p>
+        <hr style="margin:25px 0; opacity:0.1;">
+        <div style="background:#f0f7ff; border-radius:15px; padding:20px; text-align:left;">
+            <h4 style="color:var(--primary); margin-bottom:12px;">📋 Come guadagnare Punti Palla:</h4>
+            <p style="font-size:0.85rem; color:#444; line-height:2;">
+                🎯 Accesso giornaliero: <b>+2 punti</b><br>
+                📺 10 min di live: <b>+5 punti</b><br>
+                📺 20 min di live: <b>+10 punti</b><br>
+                📺 30 min di live: <b>+15 punti</b><br>
+                📺 40 min di live: <b>+25 punti</b><br>
+                📺 50 min di live: <b>+35 punti</b><br>
+                📺 60 min di live: <b>+45 punti</b><br>
+                📺 65+ min di live: <b>+60 punti</b><br>
+                📅 Aggiunta evento calendario: <b>+3 punti</b> (solo allenatori)
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- PAGINA CLASSIFICA PUNTI -->
+<div id="page-classifica" class="view hidden">
+    <h2 style="color: var(--primary); margin-bottom: 25px;">🏆 Classifica Punti Palla</h2>
+    <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow);">
+        <div id="classifica-list"></div>
+    </div>
+</div>
+
+<!-- POPUP PUNTI PALLA GIORNALIERO -->
+<div id="popup-puntipalla" style="
+    display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
+    z-index:99998; align-items:center; justify-content:center;">
+    <div style="
+        background:white; border-radius:25px; padding:40px;
+        max-width:420px; width:90%; box-shadow:0 20px 60px rgba(0,0,0,0.3);
+        text-align:center; animation: fadeIn 0.4s ease;">
+        <div style="font-size:4rem; margin-bottom:10px;">🏀</div>
+        <h2 style="color:var(--primary); margin-bottom:10px;">Bentornato nel sito!</h2>
+        <p style="color:var(--gray); margin-bottom:25px; font-size:0.95rem;">
+            Riscatta il tuo <b>Punto Palla</b> giornaliero prima di continuare!
+        </p>
+        <div style="background:#fff8e1; border-radius:15px; padding:15px; margin-bottom:25px;">
+            <span style="font-size:2rem; font-weight:900; color:var(--accent);">+2</span>
+            <p style="color:#888; font-size:0.8rem; margin-top:5px;">Punti Palla da riscattare</p>
+        </div>
+        <button onclick="riscattaPuntoPalla()" style="
+            width:100%; padding:16px; background:linear-gradient(135deg, var(--primary), #0072ff);
+            color:white; border:none; border-radius:15px; font-size:1.1rem;
+            font-weight:900; cursor:pointer; letter-spacing:1px;
+            box-shadow:0 5px 15px rgba(0,70,140,0.3);">
+            🏀 RISCATTA PUNTO PALLA
+        </button>
+    </div>
+</div>
 		
 <style>
 @keyframes pulse-red {
@@ -882,7 +949,13 @@ function openHistory() {
         if(viewId === 'calendar') renderCalendar();
         if(viewId === 'news') renderNews();
         if(viewId === 'profile') renderProfile();
-		if(viewId === 'live') checkLiveStatus();
+		if(viewId === 'live') {
+		    checkLiveStatus();
+		    if(currentUser) avviaTimerLive();
+		}
+		if(viewId === 'miei-punti') renderMieiPunti();
+		if(viewId === 'classifica') aggiornaClassifica();
+		if(viewId !== 'live') fermaTimerLive();
 		if(viewId === 'mstudio') {
     	if(!currentUser || currentUser.role !== 'Allenatore') { navigateTo('home'); return; }
 	}
@@ -984,7 +1057,7 @@ function adminDeleteUser(name) {
     showDay(day);
     renderMatches();
     saveMatches();
-	 
+	aggiungiPuntiBalla(3, 'Evento aggiunto al calendario');
 	
     // --- PARTE NUOVA: INVIO EMAIL AUTOMATICO ---
 	// --- PARTE NUOVA: INVIO EMAIL AUTOMATICO ---
@@ -1529,6 +1602,7 @@ function uploadPhotos(event, matchId) {
         btn.classList.remove('hidden');
         area.classList.add('hidden');
     }
+	if(currentUser) controllaPopupGiornaliero();
 
     // 🔥 MOSTRA BOTTONI RECORD SOLO ALLENATORE
     const isCoach = currentUser && currentUser.role === 'Allenatore';
@@ -1997,6 +2071,167 @@ function salvaRegistrazione() {
             <button onclick="document.getElementById('${id}').remove()" style="background:#ffebeb; color:red; border:none; border-radius:8px; width:34px; height:34px; font-size:1rem; cursor:pointer; font-weight:900;">✕</button>
         </div>
     `;
+}
+
+	// --- PUNTI PALLA ---
+let liveWatchInterval = null;
+let liveMinutesWatched = 0;
+let livePointsAwarded = [];
+
+const LIVE_REWARDS = [
+    { minutes: 10, points: 5 },
+    { minutes: 20, points: 10 },
+    { minutes: 30, points: 15 },
+    { minutes: 40, points: 25 },
+    { minutes: 50, points: 35 },
+    { minutes: 60, points: 45 },
+    { minutes: 65, points: 60 }
+];
+
+function togglePuntiBalla(e) {
+    e.stopPropagation();
+    toggleEl('puntiballa-dropdown');
+}
+
+function getPuntiBalla() {
+    if (!currentUser) return 0;
+    const saved = JSON.parse(localStorage.getItem('puntiballa') || '{}');
+    return saved[currentUser.name] || 0;
+}
+
+function setPuntiBalla(punti) {
+    if (!currentUser) return;
+    const saved = JSON.parse(localStorage.getItem('puntiballa') || '{}');
+    saved[currentUser.name] = punti;
+    localStorage.setItem('puntiballa', JSON.stringify(saved));
+    sincronizzaPuntiSheetDB(punti);
+}
+
+function aggiungiPuntiBalla(quantita, motivo) {
+    if (!currentUser) return;
+    const attuali = getPuntiBalla();
+    const nuovi = attuali + quantita;
+    setPuntiBalla(nuovi);
+    mostraNotificaPunti(quantita, motivo);
+    aggiornaClassifica();
+}
+
+function mostraNotificaPunti(quantita, motivo) {
+    const notif = document.createElement('div');
+    notif.style.cssText = `
+        position:fixed; bottom:100px; left:50%; transform:translateX(-50%);
+        background:linear-gradient(135deg, var(--primary), #0072ff);
+        color:white; padding:12px 25px; border-radius:50px;
+        font-weight:800; font-size:0.9rem; z-index:99999;
+        box-shadow:0 5px 20px rgba(0,70,140,0.4);
+        animation: fadeIn 0.3s ease;
+    `;
+    notif.innerText = `🏀 +${quantita} Punti Palla — ${motivo}!`;
+    document.body.appendChild(notif);
+    setTimeout(() => notif.remove(), 3000);
+}
+
+function sincronizzaPuntiSheetDB(punti) {
+    if (!currentUser) return;
+    const urlSheetDB = "https://sheetdb.io/api/v1/7z0n1zvmau7t4";
+    fetch(`${urlSheetDB}/search?nome=${encodeURIComponent(currentUser.name)}`)
+    .then(res => res.json())
+    .then(data => {
+        if (data && data.length > 0) {
+            return fetch(`${urlSheetDB}/nome/${encodeURIComponent(currentUser.name)}`, {
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ data: { punti_palla: punti } })
+            });
+        }
+    })
+    .catch(err => console.log('Sync punti fallita:', err));
+}
+
+function controllaPopupGiornaliero() {
+    if (!currentUser) return;
+    const oggi = new Date().toDateString();
+    const chiave = `puntiballa-giorno-${currentUser.name}`;
+    const ultimoRiscatto = localStorage.getItem(chiave);
+    if (ultimoRiscatto !== oggi) {
+        setTimeout(() => {
+            document.getElementById('popup-puntipalla').style.display = 'flex';
+        }, 500);
+    }
+}
+
+function riscattaPuntoPalla() {
+    const oggi = new Date().toDateString();
+    const chiave = `puntiballa-giorno-${currentUser.name}`;
+    localStorage.setItem(chiave, oggi);
+    document.getElementById('popup-puntipalla').style.display = 'none';
+    aggiungiPuntiBalla(2, 'Accesso giornaliero');
+}
+
+function avviaTimerLive() {
+    if (liveWatchInterval) return;
+    liveMinutesWatched = 0;
+    livePointsAwarded = [];
+    liveWatchInterval = setInterval(() => {
+        liveMinutesWatched++;
+        LIVE_REWARDS.forEach(r => {
+            if (liveMinutesWatched === r.minutes && !livePointsAwarded.includes(r.minutes)) {
+                livePointsAwarded.push(r.minutes);
+                aggiungiPuntiBalla(r.points, `${r.minutes} min di live`);
+            }
+        });
+    }, 60000);
+}
+
+function fermaTimerLive() {
+    if (liveWatchInterval) {
+        clearInterval(liveWatchInterval);
+        liveWatchInterval = null;
+        liveMinutesWatched = 0;
+    }
+}
+
+function aggiornaClassifica() {
+    const saved = JSON.parse(localStorage.getItem('puntiballa') || '{}');
+    const classifica = Object.entries(saved)
+        .sort((a, b) => b[1] - a[1])
+        .map((entry, index) => ({ pos: index + 1, nome: entry[0], punti: entry[1] }));
+
+    const list = document.getElementById('classifica-list');
+    if (!list) return;
+
+    if (classifica.length === 0) {
+        list.innerHTML = '<p style="text-align:center; color:var(--gray); padding:30px;">Nessun punto ancora!</p>';
+        return;
+    }
+
+    const medals = ['🥇', '🥈', '🥉'];
+    list.innerHTML = classifica.map(u => {
+        const isCurrent = currentUser && u.nome === currentUser.name;
+        const medal = medals[u.pos - 1] || `<span style="font-weight:900; color:var(--gray);">${u.pos}.</span>`;
+        return `
+            <div style="
+                display:flex; align-items:center; gap:15px;
+                padding:15px 20px; border-radius:15px; margin-bottom:10px;
+                background:${isCurrent ? '#e8f0fe' : '#f9f9f9'};
+                border:${isCurrent ? '2px solid var(--primary)' : '1px solid #eee'};
+            ">
+                <span style="font-size:1.5rem; min-width:35px;">${medal}</span>
+                <span style="flex:1; font-weight:${isCurrent ? '900' : '600'}; color:${isCurrent ? 'var(--primary)' : 'var(--text)'};">
+                    ${u.nome} ${isCurrent ? '← Tu' : ''}
+                </span>
+                <span style="font-size:1.2rem; font-weight:900; color:var(--accent);">
+                    🏀 ${u.punti}
+                </span>
+            </div>
+        `;
+    }).join('');
+}
+
+function renderMieiPunti() {
+    if (!currentUser) return;
+    document.getElementById('pp-username').innerText = currentUser.name;
+    document.getElementById('pp-count').innerText = getPuntiBalla();
 }
 	
 	// --- ROTAZIONE GIF SFONDO ---
