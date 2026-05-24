@@ -293,24 +293,10 @@
         </div>
         <button id="login-trigger" class="user-trigger" onclick="navigateTo('login')"><strong>Accedi o Registrati al MyMBA</strong></button>
     </div>
-<!-- HAMBURGER BUTTON -->
-    <button class="hamburger-btn" onclick="toggleMobileMenu()" id="hamburger-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
 </header>
 
 <!-- OVERLAY -->
 <div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileMenu()"></div>
-
-<!-- MENU MOBILE -->
-<div class="mobile-menu" id="mobile-menu">
-    <button class="mobile-close-btn" onclick="closeMobileMenu()">✕</button>
-
-    <div class="mobile-menu-item" onclick="mobileNav('home')">🏠 Home</div>
-    <div class="mobile-menu-item" onclick="mobileNav('storia')">📜 La Nostra Storia</div>
-    <div class="mobile-menu-item" onclick="mobileNav('calendar')">📅 Calendario</div>
 
     <!-- CATEGORIE -->
     <div class="mobile-menu-item" onclick="toggleMobileSubmenu('sub-categorie')">
@@ -1674,7 +1660,6 @@ function uploadPhotos(event, matchId) {
     document.querySelectorAll('.record-btn').forEach(btn => {
         btn.style.display = isCoach ? 'inline-block' : 'none';
     });
-    updateMobileUI();
 }
 	
     function handleLogout() {
@@ -2300,49 +2285,6 @@ function renderMieiPunti() {
     document.getElementById('pp-count').innerText = getPuntiBalla();
 }
 
-// --- MENU MOBILE ---
-function toggleMobileMenu() {
-    const menu = document.getElementById('mobile-menu');
-    const overlay = document.getElementById('mobile-overlay');
-    menu.classList.toggle('open');
-    overlay.classList.toggle('open');
-}
-
-function closeMobileMenu() {
-    document.getElementById('mobile-menu').classList.remove('open');
-    document.getElementById('mobile-overlay').classList.remove('open');
-}
-
-function toggleMobileSubmenu(id) {
-    const sub = document.getElementById(id);
-    sub.classList.toggle('open');
-}
-
-function mobileNav(viewId) {
-    navigateTo(viewId);
-    closeMobileMenu();
-}
-
-function updateMobileUI() {
-    const loginBtn = document.getElementById('mobile-login-btn');
-    const userArea = document.getElementById('mobile-user-area');
-    const username = document.getElementById('mobile-username');
-    const adminBtn = document.getElementById('mobile-admin-btn');
-    const mstudioBtn = document.getElementById('mobile-mstudio-btn');
-
-    if (currentUser) {
-        loginBtn.style.display = 'none';
-        userArea.style.display = 'block';
-        username.innerText = '👤 ' + currentUser.name.toUpperCase();
-        if (adminBtn) adminBtn.style.display = currentUser.role === 'HostWeb' ? 'block' : 'none';
-        if (mstudioBtn) mstudioBtn.style.display = currentUser.role === 'Allenatore' ? 'block' : 'none';
-    } else {
-        loginBtn.style.display = 'block';
-        userArea.style.display = 'none';
-        if (adminBtn) adminBtn.style.display = 'none';
-        if (mstudioBtn) mstudioBtn.style.display = 'none';
-    }
-}
 	
 	// --- ROTAZIONE GIF SFONDO ---
 	const bgGifs = [
@@ -2489,102 +2431,6 @@ const botData = {
   }
 };
 
-/* --- MENU' TELEFONO "HAMBURGER" --- */
-.hamburger-btn {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 8px;
-    border: none;
-    background: transparent;
-    z-index: 3000;
-}
-.hamburger-btn span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: white;
-    border-radius: 3px;
-    transition: 0.3s;
-}
-
-.mobile-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 280px;
-    height: 100vh;
-    background: var(--primary-dark);
-    z-index: 5000;
-    flex-direction: column;
-    padding: 80px 0 30px;
-    box-shadow: 5px 0 20px rgba(0,0,0,0.3);
-    transition: left 0.3s ease;
-    overflow-y: auto;
-}
-.mobile-menu.open {
-    left: 0;
-}
-.mobile-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.5);
-    z-index: 4999;
-}
-.mobile-overlay.open {
-    display: block;
-}
-.mobile-menu-item {
-    color: white;
-    padding: 16px 25px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    transition: 0.2s;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-.mobile-menu-item:hover { background: rgba(255,255,255,0.1); }
-.mobile-submenu {
-    background: rgba(0,0,0,0.2);
-    display: none;
-}
-.mobile-submenu.open { display: block; }
-.mobile-submenu-item {
-    color: rgba(255,255,255,0.85);
-    padding: 12px 25px 12px 40px;
-    font-size: 0.85rem;
-    cursor: pointer;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: 0.2s;
-}
-.mobile-submenu-item:hover { background: rgba(255,255,255,0.08); }
-.mobile-close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.8rem;
-    cursor: pointer;
-}
-
-@media (max-width: 900px) {
-    .hamburger-btn { display: flex; }
-    .nav-links { display: none; }
-    .mobile-menu { display: flex; }
-    .brand-name { font-size: 0.75rem; }
-    .logo-box { width: 32px; height: 32px; }
-    .container { grid-template-columns: 1fr; }
-    .ads-sidebar { display: none; }
-    .hero-banner h1 { font-size: 2.5rem; }
-}
-	
 function botStep(key) {
   if(key === 'reset') {
     document.getElementById('bot-msgs').innerHTML = '<div style="background:#f0f4fa;padding:10px 13px;border-radius:12px 12px 12px 4px;font-size:0.82rem;color:#1d1d1f;line-height:1.5;max-width:90%;">Ciao! Sono <b>MercedeBot</b> 🏀<br>Come posso aiutarti?</div>';
