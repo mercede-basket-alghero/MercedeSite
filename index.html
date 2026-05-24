@@ -295,54 +295,6 @@
     </div>
 </header>
 
-<!-- OVERLAY -->
-<div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileMenu()"></div>
-
-    <!-- CATEGORIE -->
-    <div class="mobile-menu-item" onclick="toggleMobileSubmenu('sub-categorie')">
-        🏀 Categorie ▼
-    </div>
-    <div class="mobile-submenu" id="sub-categorie">
-        <div class="mobile-submenu-item" onclick="mobileNav('categorie'); showCategory('femminile')">🌸 Settore Femminile</div>
-        <div class="mobile-submenu-item" onclick="mobileNav('categorie'); showCategory('maschile')">🏀 Settore Maschile</div>
-        <div class="mobile-submenu-item" onclick="mobileNav('categorie'); showCategory('avanzate')">🚀 Minibasket</div>
-        <div class="mobile-submenu-item" id="mobile-admin-btn" style="display:none;" onclick="mobileNav('categorie'); showCategory('admin')">⚙️ ADMIN</div>
-    </div>
-
-    <div class="mobile-menu-item" onclick="mobileNav('location')">📍 Posizione</div>
-    <div class="mobile-menu-item" onclick="mobileNav('news')">📰 News</div>
-
-    <!-- DIRETTE LIVE -->
-    <div class="mobile-menu-item" onclick="toggleMobileSubmenu('sub-live')">
-        🔴 Dirette Live ▼
-    </div>
-    <div class="mobile-submenu" id="sub-live">
-        <div class="mobile-submenu-item" onclick="mobileNav('live')">🔴 Dirette Live</div>
-        <div class="mobile-submenu-item" id="mobile-mstudio-btn" style="display:none;" onclick="mobileNav('mstudio')">🎬 MStudio</div>
-    </div>
-
-    <!-- PUNTI PALLA -->
-    <div class="mobile-menu-item" onclick="toggleMobileSubmenu('sub-punti')">
-        🏀 Punti Palla ▼
-    </div>
-    <div class="mobile-submenu" id="sub-punti">
-        <div class="mobile-submenu-item" onclick="mobileNav('miei-punti')">🏀 I tuoi Punti Palla</div>
-        <div class="mobile-submenu-item" onclick="mobileNav('classifica')">🏆 Classifica Punti</div>
-    </div>
-
-    <hr style="border-color:rgba(255,255,255,0.1); margin:10px 0;">
-
-    <!-- LOGIN/PROFILO -->
-    <div id="mobile-login-btn" class="mobile-menu-item" onclick="mobileNav('login')" style="color:var(--accent);">
-        👤 Accedi al MyMBA
-    </div>
-    <div id="mobile-user-area" style="display:none;">
-        <div id="mobile-username" class="mobile-menu-item" style="color:var(--accent); pointer-events:none;"></div>
-        <div class="mobile-submenu-item" onclick="mobileNav('profile')">⚙️ Profilo</div>
-        <div class="mobile-submenu-item" onclick="handleLogout(); closeMobileMenu();" style="color:#ff6b6b;">🚪 Logout</div>
-    </div>
-</div>
-
 <div class="container">
     <aside class="ads-sidebar">
         <div class="ads-track" id="track-left"></div>
