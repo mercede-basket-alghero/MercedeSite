@@ -274,9 +274,9 @@
     </div>
 </div>
 		<div style="position: relative; display: flex; align-items: center;">
-    <span class="nav-item" onclick="togglePuntiBalla(event)"><strong>🏀 <u>Punti Palla</u></strong></span>
+    <span class="nav-item" onclick="togglePuntiBalla(event)"><strong>🏀 <u>Punti Online</u></strong></span>
     <div class="user-dropdown" id="puntiballa-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
-        <span onclick="navigateTo('miei-punti'); closeAllDropdowns()">🏀 I tuoi Punti Palla</span>
+        <span onclick="navigateTo('miei-punti'); closeAllDropdowns()">🏀 I tuoi Punti Online</span>
         <span onclick="navigateTo('classifica'); closeAllDropdowns()">🏆 Classifica Punti</span>
     </div>
 </div>
@@ -734,17 +734,17 @@
     </div>
 </div>
 
-<!-- PAGINA I TUOI PUNTI PALLA -->
+<!-- PAGINA I TUOI PUNTI ONLINE -->
 <div id="page-miei-punti" class="view hidden">
-    <h2 style="color: var(--primary); margin-bottom: 25px;">🏀 I tuoi Punti Palla</h2>
+    <h2 style="color: var(--primary); margin-bottom: 25px;">🏀 I tuoi Punti Online</h2>
     <div style="background:white; border-radius:20px; padding:40px; box-shadow:var(--shadow); text-align:center; max-width:500px; margin:0 auto;">
         <div style="font-size:5rem; margin-bottom:10px;">🏀</div>
         <h2 id="pp-username" style="color:var(--primary); font-size:1.5rem; margin-bottom:5px;"></h2>
         <div id="pp-count" style="font-size:4rem; font-weight:900; color:var(--accent); margin:20px 0;">0</div>
-        <p style="color:var(--gray); font-size:0.9rem;">Punti Palla totali</p>
+        <p style="color:var(--gray); font-size:0.9rem;">Punti Online totali</p>
         <hr style="margin:25px 0; opacity:0.1;">
         <div style="background:#f0f7ff; border-radius:15px; padding:20px; text-align:left;">
-            <h4 style="color:var(--primary); margin-bottom:12px;">📋 Come guadagnare Punti Palla:</h4>
+            <h4 style="color:var(--primary); margin-bottom:12px;">📋 Come guadagnare Punti Online:</h4>
             <p style="font-size:0.85rem; color:#444; line-height:2;">
 				🔑 Aver effettuato l'accesso come Atleta o Allenatore.<br>
                 🎯 Accesso giornaliero: <b>+2 punti</b><br>
@@ -763,13 +763,13 @@
 
 <!-- PAGINA CLASSIFICA PUNTI -->
 <div id="page-classifica" class="view hidden">
-    <h2 style="color: var(--primary); margin-bottom: 25px;">🏆 Classifica Punti Palla</h2>
+    <h2 style="color: var(--primary); margin-bottom: 25px;">🏆 Classifica Punti Online</h2>
     <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow);">
         <div id="classifica-list"></div>
     </div>
 </div>
 
-<!-- POPUP PUNTI PALLA GIORNALIERO -->
+<!-- POPUP PUNTI ONLINE GIORNALIERO -->
 <div id="popup-puntipalla" style="
     display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
     z-index:99998; align-items:center; justify-content:center;">
@@ -784,7 +784,7 @@
         </p>
         <div style="background:#fff8e1; border-radius:15px; padding:15px; margin-bottom:25px;">
             <span style="font-size:2rem; font-weight:900; color:var(--accent);">+2</span>
-            <p style="color:#888; font-size:0.8rem; margin-top:5px;">Punti Palla da riscattare</p>
+            <p style="color:#888; font-size:0.8rem; margin-top:5px;">Punti Online da riscattare</p>
         </div>
         <button onclick="riscattaPuntoPalla()" style="
             width:100%; padding:16px; background:linear-gradient(135deg, var(--primary), #0072ff);
@@ -2077,7 +2077,7 @@ function salvaRegistrazione() {
     `;
 }
 
-	// --- PUNTI PALLA ---
+	// --- PUNTI ONLINE ---
 let liveWatchInterval = null;
 let liveMinutesWatched = 0;
 let livePointsAwarded = [];
@@ -2130,7 +2130,7 @@ function mostraNotificaPunti(quantita, motivo) {
         box-shadow:0 5px 20px rgba(0,70,140,0.4);
         animation: fadeIn 0.3s ease;
     `;
-    notif.innerText = `🏀 +${quantita} Punti Palla — ${motivo}!`;
+    notif.innerText = `🏀 +${quantita} Punti Online — ${motivo}!`;
     document.body.appendChild(notif);
     setTimeout(() => notif.remove(), 3000);
 }
