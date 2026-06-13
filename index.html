@@ -237,6 +237,39 @@
             transition: 0.2s;
         }
         .photo-delete-x:hover { transform: scale(1.2); background: #ff0000; }
+
+		/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr !important;
+    padding: 15px !important;
+    gap: 15px !important;
+  }
+  .ads-sidebar { display: none !important; }
+  
+  header {
+    padding: 0 4% !important;
+    height: 65px !important;
+  }
+  .nav-links { display: none !important; }
+  .brand-name { font-size: 0.75rem !important; }
+  
+  .hero-banner { height: 240px !important; border-radius: 18px !important; }
+  .hero-banner h1 { font-size: 2.8rem !important; }
+  .hero-banner p { font-size: 0.9rem !important; }
+
+  #page-home > div { grid-template-columns: 1fr !important; }
+  
+  .calendar-grid { gap: 5px !important; }
+  .day-box { font-size: 0.85rem !important; border-radius: 8px !important; }
+  
+  .auth-box { padding: 20px !important; margin: 15px auto !important; }
+  
+  .category-table th, .category-table td { padding: 10px !important; font-size: 0.8rem !important; }
+
+  #page-mstudio > div { grid-template-columns: 1fr !important; }
+}
+		
     </style>
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
@@ -250,51 +283,128 @@
         <b class="brand-name">Mercede Basket Alghero</b>
     </div>
     
-    <nav class="nav-links">
-        <span class="nav-item" onclick="navigateTo('home')"><strong><u>Home</u></strong></span>
-        <span class="nav-item" onclick="navigateTo('storia')"><strong><u>La Nostra Storia</u></strong></span>
-        <span class="nav-item" onclick="navigateTo('calendar')"><strong><u>Calendario</u></strong></span>
-        
-		<div style="position: relative; display: flex; align-items: center;">
-    <span class="nav-item" onclick="toggleCategories(event)"><strong><u>Categorie ▼</u></strong></span>
-    <div class="user-dropdown" id="categories-dropdown" style="top: 45px; right: auto; left: 0;">
+<header>
+  <div style="display:flex; align-items:center; gap:10px;">
+    <!-- HAMBURGER — solo mobile -->
+    <button id="hamburger-btn" onclick="toggleMobileMenu()" style="
+      display:none; flex-direction:column; justify-content:center; gap:5px;
+      width:40px; height:40px; background:transparent; border:none; cursor:pointer;
+      padding:6px; border-radius:8px; transition:0.2s;
+    ">
+      <span class="hb-line"></span>
+      <span class="hb-line"></span>
+      <span class="hb-line"></span>
+    </button>
+
+    <div class="brand" onclick="navigateTo('home')">
+      <div class="logo-box">
+        <img src="immagini/logomercede-nosfondo.png" alt="Mercede Logo" onerror="this.style.display='none'">
+      </div>
+      <b class="brand-name">Mercede Basket Alghero</b>
+    </div>
+  </div>
+
+  <nav class="nav-links">
+    <span class="nav-item" onclick="navigateTo('home')"><strong><u>Home</u></strong></span>
+    <span class="nav-item" onclick="navigateTo('storia')"><strong><u>La Nostra Storia</u></strong></span>
+    <span class="nav-item" onclick="navigateTo('calendar')"><strong><u>Calendario</u></strong></span>
+    <div style="position:relative; display:flex; align-items:center;">
+      <span class="nav-item" onclick="toggleCategories(event)"><strong><u>Categorie ▼</u></strong></span>
+      <div class="user-dropdown" id="categories-dropdown" style="top:45px; right:auto; left:0;">
         <span onclick="navigateTo('categorie'); showCategory('femminile')">🌸 Settore Femminile</span>
         <span onclick="navigateTo('categorie'); showCategory('maschile')">🏀 Settore Maschile</span>
         <span onclick="navigateTo('categorie'); showCategory('avanzate')">🚀 Minibasket</span>
-		<span id="admin-category-btn" style="display:none;" onclick="navigateTo('categorie'); showCategory('admin')">⚙️ ADMIN</span>
+        <span id="admin-category-btn" style="display:none;" onclick="navigateTo('categorie'); showCategory('admin')">⚙️ ADMIN</span>
+      </div>
     </div>
-</div>
-        <span class="nav-item" onclick="navigateTo('location')"><strong><u>Posizione</u></strong></span>
-        <span class="nav-item" onclick="navigateTo('news')"><strong><u>News</u></strong></span>
-		<div style="position: relative; display: flex; align-items: center;">
-    <span class="nav-item" id="live-nav-btn" onclick="handleLiveClick(event)"><strong>🔴 <u>Dirette Live</u></strong></span>
-    <div class="user-dropdown" id="live-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
+    <span class="nav-item" onclick="navigateTo('location')"><strong><u>Posizione</u></strong></span>
+    <span class="nav-item" onclick="navigateTo('news')"><strong><u>News</u></strong></span>
+    <div style="position:relative; display:flex; align-items:center;">
+      <span class="nav-item" id="live-nav-btn" onclick="handleLiveClick(event)"><strong>🔴 <u>Dirette Live</u></strong></span>
+      <div class="user-dropdown" id="live-dropdown" style="top:45px; right:auto; left:0; display:none;">
         <span onclick="navigateTo('live'); closeAllDropdowns()">🔴 Dirette Live</span>
         <span id="mstudio-btn" onclick="navigateTo('mstudio'); closeAllDropdowns()">🎬 MStudio</span>
+      </div>
     </div>
-</div>
-		<div style="position: relative; display: flex; align-items: center;">
-    <span class="nav-item" onclick="togglePuntiBalla(event)"><strong>🏀 <u>Punti Online</u></strong></span>
-    <div class="user-dropdown" id="puntiballa-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
+    <div style="position:relative; display:flex; align-items:center;">
+      <span class="nav-item" onclick="togglePuntiBalla(event)"><strong>🏀 <u>Punti Online</u></strong></span>
+      <div class="user-dropdown" id="puntiballa-dropdown" style="top:45px; right:auto; left:0; display:none;">
         <span onclick="navigateTo('miei-punti'); closeAllDropdowns()">🏀 I tuoi Punti Online</span>
         <span onclick="navigateTo('classifica'); closeAllDropdowns()">🏆 Classifica Punti</span>
+      </div>
     </div>
-</div>
-    </nav>
-    
-    <div class="header-right">
-        <div id="logged-user-area" class="hidden">
-            <button class="user-trigger" id="display-name" onclick="toggleUserMenu(event)">UTENTE</button>
-            <div class="user-dropdown" id="user-dropdown">
-                <div id="user-joined-info" style="padding: 14px 20px; font-size: 0.7rem; color: var(--gray); background: #fafafa;"></div>
-                <span onclick="navigateTo('profile')">⚙️ Profilo</span>
-                <span onclick="handleLogout()" style="color: var(--danger);">🚪 Logout</span>
-            </div>
-        </div>
-        <button id="login-trigger" class="user-trigger" onclick="navigateTo('login')"><strong>Accedi o Registrati al MyMBA</strong></button>
+  </nav>
+
+  <div class="header-right">
+    <div id="logged-user-area" class="hidden">
+      <button class="user-trigger" id="display-name" onclick="toggleUserMenu(event)">UTENTE</button>
+      <div class="user-dropdown" id="user-dropdown">
+        <div id="user-joined-info" style="padding:14px 20px; font-size:0.7rem; color:var(--gray); background:#fafafa;"></div>
+        <span onclick="navigateTo('profile')">⚙️ Profilo</span>
+        <span onclick="handleLogout()" style="color:var(--danger);">🚪 Logout</span>
+      </div>
     </div>
+    <button id="login-trigger" class="user-trigger" onclick="navigateTo('login')"><strong>Accedi</strong></button>
+  </div>
 </header>
 
+<!-- MENU MOBILE -->
+<div id="mobile-menu" style="
+  display:none; position:fixed; top:65px; left:0; right:0; bottom:0;
+  background:rgba(0,40,100,0.97); z-index:1999;
+  flex-direction:column; overflow-y:auto;
+  padding:20px;
+">
+  <div style="display:flex; flex-direction:column; gap:6px;">
+    <button class="mob-item" onclick="mobileNav('home')">🏠 Home</button>
+    <button class="mob-item" onclick="mobileNav('storia')">📜 La Nostra Storia</button>
+    <button class="mob-item" onclick="mobileNav('calendar')">📅 Calendario</button>
+
+    <!-- CATEGORIE ACCORDION -->
+    <div>
+      <button class="mob-item" onclick="toggleMobSection('mob-categorie')" style="justify-content:space-between;">
+        <span>🏀 Categorie</span><span id="arrow-categorie">▼</span>
+      </button>
+      <div id="mob-categorie" style="display:none; flex-direction:column; gap:4px; padding:5px 0 5px 16px;">
+        <button class="mob-sub" onclick="mobileNav('categorie'); showCategory('femminile')">🌸 Settore Femminile</button>
+        <button class="mob-sub" onclick="mobileNav('categorie'); showCategory('maschile')">🏀 Settore Maschile</button>
+        <button class="mob-sub" onclick="mobileNav('categorie'); showCategory('avanzate')">🚀 Minibasket</button>
+        <button id="mob-admin-btn" class="mob-sub" style="display:none;" onclick="mobileNav('categorie'); showCategory('admin')">⚙️ Admin</button>
+      </div>
+    </div>
+
+    <button class="mob-item" onclick="mobileNav('location')">📍 Posizione</button>
+    <button class="mob-item" onclick="mobileNav('news')">📰 News</button>
+
+    <!-- LIVE ACCORDION -->
+    <div>
+      <button class="mob-item" onclick="toggleMobSection('mob-live')" style="justify-content:space-between;">
+        <span>🔴 Dirette Live</span><span id="arrow-live">▼</span>
+      </button>
+      <div id="mob-live" style="display:none; flex-direction:column; gap:4px; padding:5px 0 5px 16px;">
+        <button class="mob-sub" onclick="mobileNav('live')">🔴 Guarda la Diretta</button>
+        <button id="mob-mstudio-btn" class="mob-sub" style="display:none;" onclick="mobileNav('mstudio')">🎬 MStudio</button>
+      </div>
+    </div>
+
+    <!-- PUNTI ACCORDION -->
+    <div>
+      <button class="mob-item" onclick="toggleMobSection('mob-punti')" style="justify-content:space-between;">
+        <span>🏀 Punti Online</span><span id="arrow-punti">▼</span>
+      </button>
+      <div id="mob-punti" style="display:none; flex-direction:column; gap:4px; padding:5px 0 5px 16px;">
+        <button class="mob-sub" onclick="mobileNav('miei-punti')">🏀 I tuoi Punti</button>
+        <button class="mob-sub" onclick="mobileNav('classifica')">🏆 Classifica</button>
+      </div>
+    </div>
+
+    <div style="height:1px; background:rgba(255,255,255,0.15); margin:10px 0;"></div>
+    <button class="mob-item" onclick="mobileNav('login')" id="mob-login-btn">🔐 Accedi / Registrati</button>
+    <button class="mob-item" style="display:none;" id="mob-profile-btn" onclick="mobileNav('profile')">⚙️ Profilo</button>
+    <button class="mob-item" style="display:none; color:#ff8a80;" id="mob-logout-btn" onclick="handleLogout(); closeMobileMenu()">🚪 Logout</button>
+  </div>
+</div>
+	
 <div class="container">
     <aside class="ads-sidebar">
         <div class="ads-track" id="track-left"></div>
@@ -797,10 +907,40 @@
 </div>
 		
 <style>
-@keyframes pulse-red {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.3); }
+
+<style>
+.hb-line {
+  display:block; width:22px; height:2.5px;
+  background:white; border-radius:2px; transition:0.3s;
 }
+.mob-item {
+  width:100%; padding:14px 16px; background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12); border-radius:12px;
+  color:white; font-size:1rem; font-weight:700; cursor:pointer;
+  text-align:left; display:flex; align-items:center; gap:10px;
+  transition:0.2s; font-family:'Inter', sans-serif;
+}
+.mob-item:hover { background:rgba(251,192,45,0.2); border-color:#fbc02d; }
+.mob-sub {
+  width:100%; padding:11px 14px; background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08); border-radius:10px;
+  color:rgba(255,255,255,0.85); font-size:0.9rem; font-weight:600;
+  cursor:pointer; text-align:left; transition:0.2s;
+  font-family:'Inter', sans-serif;
+}
+.mob-sub:hover { background:rgba(251,192,45,0.15); color:white; }
+
+@media (max-width: 768px) {
+  #hamburger-btn { display:flex !important; }
+  .user-trigger { font-size:0.65rem !important; padding:8px 10px !important; }
+  #login-trigger strong { font-size:0.65rem; }
+}
+</style>
+		@keyframes pulse-red {
+		  0%, 100% { opacity: 1; transform: scale(1); }
+		  50% { opacity: 0.4; transform: scale(1.3); }
+		}
+
 </style>
 
         <div id="page-location" class="view hidden">
@@ -2264,7 +2404,45 @@ function renderMieiPunti() {
 	    document.body.style.transition = 'background-image 1s ease';
 	    document.body.style.backgroundImage = `url('${bgGifs[currentBg]}')`;
 	}, 8000);
-		
+
+
+// --- MENU MOBILE ---
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const isOpen = menu.style.display === 'flex';
+  menu.style.display = isOpen ? 'none' : 'flex';
+  // Aggiorna visibilità tasti login/logout nel menu mobile
+  const logged = !!currentUser;
+  document.getElementById('mob-login-btn').style.display = logged ? 'none' : 'block';
+  document.getElementById('mob-profile-btn').style.display = logged ? 'block' : 'none';
+  document.getElementById('mob-logout-btn').style.display = logged ? 'block' : 'none';
+  if (currentUser && currentUser.role === 'HostWeb') {
+    document.getElementById('mob-admin-btn').style.display = 'block';
+  }
+  if (currentUser && currentUser.role === 'Allenatore') {
+    const mstudioBtn = document.getElementById('mob-mstudio-btn');
+    if (mstudioBtn) mstudioBtn.style.display = 'block';
+  }
+}
+
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').style.display = 'none';
+}
+
+function mobileNav(viewId) {
+  closeMobileMenu();
+  navigateTo(viewId);
+}
+
+function toggleMobSection(id) {
+  const el = document.getElementById(id);
+  const isOpen = el.style.display === 'flex';
+  el.style.display = isOpen ? 'none' : 'flex';
+  const key = id.replace('mob-', '');
+  const arrow = document.getElementById('arrow-' + key);
+  if (arrow) arrow.innerText = isOpen ? '▼' : '▲';
+}
+	
 </script>
 
 	<!-- ===== MERCEDEBOT ===== -->
