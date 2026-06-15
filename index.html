@@ -75,7 +75,7 @@
             letter-spacing: 0.8px; opacity: 0.9;
         }
 
-			#page-login, #page-register, #page-recovery {
+		#page-login, #page-register, #page-recovery {
 		    background: var(--light-bg);
 		    border-radius: 20px;
 		    padding: 20px;
@@ -89,7 +89,7 @@
 	    z-index: 2;
 	}
 		
-			.record-btn {
+		.record-btn {
 		background: var(--primary);
 		color: white;
 		border: none;
@@ -130,7 +130,6 @@
         .container { display: grid; grid-template-columns: 220px 1fr 220px; gap: 30px; padding: 30px 2%; max-width: 1600px; margin: auto; }
         
         /* --- SIDEBARS (ADS) --- */
-        /* --- SIDEBARS (ADS) --- */
 		.ads-sidebar { position: sticky; top: 115px; height: calc(100vh - 150px); border-radius: 20px; background: #eef2f5; border: 1px solid #e0e6ed; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 		.ads-track { display: flex; flex-direction: column; gap: 12px; padding: 15px; width: 100%; }
 		        
@@ -161,12 +160,7 @@
     margin-bottom: 10px; 
     font-family: 'Bebas Neue', sans-serif;
     background: linear-gradient(180deg, 
-        #c0c0c0 0%,      /* argento chiaro in cima */
-        #f5f5f5 20%,     /* bianco argento */
-        #a8a8a8 40%,     /* argento medio */
-        #ffd700 55%,     /* oro */
-        #c8960a 75%,     /* oro scuro */
-        #8B6914 100%     /* oro bronzato in fondo */
+        #c0c0c0 0%, #f5f5f5 20%, #a8a8a8 40%, #ffd700 55%, #c8960a 75%, #8B6914 100%
     );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -186,7 +180,6 @@
         }
         .day-box:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); background: #f0f7ff; }
         
-        /* Event Colors */
         .has-match-casa { background: var(--primary) !important; color: white !important; }
         .has-match-trasferta { background: var(--accent) !important; color: var(--primary) !important; }
         .has-match-allenamento { background: var(--success) !important; color: green !important; border: 2px solid #2eb835; }
@@ -237,10 +230,351 @@
             transition: 0.2s;
         }
         .photo-delete-x:hover { transform: scale(1.2); background: #ff0000; }
+
+        /* =============================================
+           HAMBURGER MENU MOBILE
+           ============================================= */
+        .hamburger-btn {
+          display: none;
+          background: rgba(255,255,255,0.15);
+          border: 1.5px solid rgba(255,255,255,0.4);
+          border-radius: 10px;
+          padding: 9px 12px;
+          cursor: pointer;
+          flex-direction: column;
+          gap: 5px;
+          align-items: center;
+          justify-content: center;
+          min-width: 44px;
+          min-height: 44px;
+        }
+        .hamburger-btn span {
+          display: block;
+          width: 22px;
+          height: 2.5px;
+          background: white;
+          border-radius: 2px;
+          transition: 0.3s;
+        }
+        #mobile-nav-overlay {
+          display: none;
+          position: fixed;
+          inset: 0;
+          background: rgba(0,30,70,0.97);
+          z-index: 9500;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 70px 20px 30px;
+          overflow-y: auto;
+        }
+        #mobile-nav-overlay .mnav-item {
+          color: white;
+          font-size: 1.1rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          padding: 16px 0;
+          width: 100%;
+          text-align: center;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          cursor: pointer;
+          transition: color 0.2s;
+          -webkit-tap-highlight-color: transparent;
+        }
+        #mobile-nav-overlay .mnav-item:active { color: #fbc02d; }
+        #mobile-nav-overlay .mnav-sub {
+          color: rgba(255,255,255,0.6);
+          font-size: 0.85rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          padding: 11px 0;
+          width: 100%;
+          text-align: center;
+          border-bottom: 1px solid rgba(255,255,255,0.04);
+          cursor: pointer;
+          transition: color 0.2s;
+          padding-left: 20px;
+        }
+        #mobile-nav-overlay .mnav-sub:active { color: #fbc02d; }
+        #mobile-nav-close {
+          position: absolute;
+          top: 18px;
+          right: 18px;
+          background: rgba(255,255,255,0.1);
+          border: none;
+          color: white;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          font-size: 1.4rem;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        #mobile-nav-overlay .mnav-logo {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 25px;
+          padding-bottom: 20px;
+          border-bottom: 2px solid rgba(251,192,45,0.3);
+          width: 100%;
+          justify-content: center;
+        }
+        #mobile-nav-overlay .mnav-logo-text {
+          color: white;
+          font-weight: 900;
+          font-size: 1rem;
+          letter-spacing: 0.5px;
+        }
+        #mobile-nav-overlay .mnav-section-label {
+          color: #fbc02d;
+          font-size: 0.6rem;
+          font-weight: 900;
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          width: 100%;
+          text-align: left;
+          padding: 14px 0 4px;
+          opacity: 0.7;
+        }
+
+        /* =============================================
+           RESPONSIVE MOBILE
+           ============================================= */
+        @media (max-width: 900px) {
+
+          /* Layout principale: 1 colonna */
+          .container {
+            grid-template-columns: 1fr !important;
+            padding: 12px !important;
+            gap: 12px !important;
+          }
+
+          /* Nascondi sidebar ads */
+          .ads-sidebar { display: none !important; }
+
+          /* Header: compatto */
+          header {
+            height: auto !important;
+            flex-direction: row !important;
+            padding: 12px 4% !important;
+            gap: 10px !important;
+            flex-wrap: nowrap !important;
+          }
+
+          .brand { flex: 1 !important; }
+          .brand-name { font-size: 0.8rem !important; }
+
+          /* Nascondi nav desktop, mostra hamburger */
+          .nav-links { display: none !important; }
+          .header-right { flex: 0 !important; }
+          #login-trigger { display: none !important; }
+          #logged-user-area { flex: 0 !important; }
+          #display-name { padding: 8px 14px !important; font-size: 0.75rem !important; }
+
+          .hamburger-btn { display: flex !important; }
+
+          /* Dropdown utente: in basso su mobile */
+          #user-dropdown {
+            position: fixed !important;
+            top: auto !important;
+            bottom: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            border-radius: 20px 20px 0 0 !important;
+            min-width: unset !important;
+            width: 100% !important;
+            z-index: 9100 !important;
+            box-shadow: 0 -5px 30px rgba(0,0,0,0.25) !important;
+          }
+          #user-dropdown span {
+            padding: 18px 24px !important;
+            font-size: 1rem !important;
+          }
+
+          /* Hero */
+          .hero-banner {
+            height: 200px !important;
+            border-radius: 18px !important;
+            margin-bottom: 16px !important;
+          }
+          .hero-banner h1 {
+            font-size: 2.3rem !important;
+            letter-spacing: 1px !important;
+          }
+          .hero-banner p { font-size: 0.85rem !important; }
+
+          /* Home: 1 colonna */
+          #page-home > div:nth-child(2) {
+            grid-template-columns: 1fr !important;
+          }
+
+          /* Calendario: header verticale */
+          #page-calendar > div:first-child {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 12px !important;
+          }
+          #page-calendar > div:first-child > div:last-child {
+            display: flex !important;
+            gap: 8px !important;
+            width: 100% !important;
+          }
+          #cal-month { width: 65% !important; margin: 0 !important; }
+          #cal-year { width: 35% !important; margin: 0 !important; }
+
+          .calendar-grid { gap: 4px !important; }
+          .day-box {
+            font-size: 0.75rem !important;
+            border-radius: 7px !important;
+          }
+          .day-box:hover { transform: none !important; }
+
+          /* Bottoni giorno admin */
+          #admin-add-btn > div {
+            flex-direction: column !important;
+            gap: 8px !important;
+          }
+
+          /* Tabelle categorie */
+          .category-table th, .category-table td {
+            padding: 10px 8px !important;
+            font-size: 0.8rem !important;
+          }
+
+          /* Auth box */
+          .auth-box {
+            padding: 22px 16px !important;
+            margin: 15px auto !important;
+            border-radius: 18px !important;
+          }
+
+          /* Admin stats: 1 colonna */
+          #section-admin > div > div:nth-child(2) {
+            grid-template-columns: 1fr !important;
+          }
+
+          /* MStudio mixer: 1 colonna */
+          #page-mstudio > div:first-of-type > div > div {
+            grid-template-columns: 1fr !important;
+          }
+
+          /* Punti online */
+          #page-miei-punti > div {
+            padding: 22px 16px !important;
+          }
+
+          /* Record mensile: un po' più piccoli */
+          #win-count, #loss-count {
+            font-size: 2.5rem !important;
+          }
+
+          /* Footer */
+          footer { padding: 14px !important; font-size: 0.78rem !important; }
+
+          /* Bottoni float: più vicini ai bordi */
+          #mercedebot-trigger {
+            bottom: 18px !important;
+            right: 14px !important;
+            width: 50px !important;
+            height: 50px !important;
+          }
+          #anim-btn {
+            bottom: 18px !important;
+            left: 14px !important;
+            width: 50px !important;
+            height: 50px !important;
+          }
+          #anim-tooltip { display: none !important; }
+
+          /* Chat bot */
+          #mercedebot-chat {
+            width: calc(100vw - 28px) !important;
+            right: 14px !important;
+            bottom: 80px !important;
+            border-radius: 18px !important;
+          }
+
+          /* Cookie banner */
+          #cookie-banner > div {
+            flex-direction: column !important;
+            gap: 10px !important;
+          }
+          #cookie-banner > div > div:last-child {
+            display: flex !important;
+            width: 100% !important;
+          }
+          #cookie-banner > div > div:last-child button {
+            flex: 1 !important;
+          }
+
+          /* Foto grandi: bordo più sottile */
+          .big-photo-item { border-width: 2px !important; }
+
+          /* Leggenda calendario */
+          #page-calendar > div:first-child > div > div {
+            flex-direction: column !important;
+            gap: 8px !important;
+          }
+
+          /* Bottoni live admin */
+          #live-admin-panel > div:nth-child(2) {
+            flex-direction: column !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-banner h1 { font-size: 1.9rem !important; }
+          .hero-banner { height: 170px !important; }
+          .day-box { font-size: 0.68rem !important; }
+          #win-count, #loss-count { font-size: 2rem !important; }
+          .auth-box h2 { font-size: 1.3rem !important; }
+        }
+
     </style>
 	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<!-- MENU MOBILE OVERLAY -->
+<div id="mobile-nav-overlay">
+  <button id="mobile-nav-close" onclick="chiudiMenuMobile()">✕</button>
+  <div class="mnav-logo">
+    <div class="logo-box" style="width:36px;height:36px;">
+      <img src="immagini/logomercede-nosfondo.png" alt="Logo" onerror="this.style.display='none'">
+    </div>
+    <span class="mnav-logo-text">Mercede Basket Alghero</span>
+  </div>
+
+  <span class="mnav-item" onclick="navigateTo('home'); chiudiMenuMobile()">🏠 Home</span>
+  <span class="mnav-item" onclick="navigateTo('storia'); chiudiMenuMobile()">📜 La Nostra Storia</span>
+  <span class="mnav-item" onclick="navigateTo('calendar'); chiudiMenuMobile()">📅 Calendario</span>
+
+  <div class="mnav-section-label">Categorie</div>
+  <span class="mnav-sub" onclick="navigateTo('categorie'); showCategory('femminile'); chiudiMenuMobile()">🌸 Settore Femminile</span>
+  <span class="mnav-sub" onclick="navigateTo('categorie'); showCategory('maschile'); chiudiMenuMobile()">🏀 Settore Maschile</span>
+  <span class="mnav-sub" onclick="navigateTo('categorie'); showCategory('avanzate'); chiudiMenuMobile()">🚀 Minibasket</span>
+  <span id="mobile-admin-btn" class="mnav-sub" style="display:none;" onclick="navigateTo('categorie'); showCategory('admin'); chiudiMenuMobile()">⚙️ ADMIN</span>
+
+  <span class="mnav-item" onclick="navigateTo('location'); chiudiMenuMobile()">📍 Posizione</span>
+  <span class="mnav-item" onclick="navigateTo('news'); chiudiMenuMobile()">📰 News</span>
+  <span class="mnav-item" onclick="navigateTo('live'); chiudiMenuMobile()">🔴 Dirette Live</span>
+  <span id="mobile-mstudio-btn" class="mnav-sub" style="display:none;" onclick="navigateTo('mstudio'); chiudiMenuMobile()">🎬 MStudio</span>
+
+  <div class="mnav-section-label">Punti Online</div>
+  <span class="mnav-sub" onclick="navigateTo('miei-punti'); chiudiMenuMobile()">🏀 I tuoi Punti Online</span>
+  <span class="mnav-sub" onclick="navigateTo('classifica'); chiudiMenuMobile()">🏆 Classifica Punti</span>
+
+  <div id="mobile-user-section" style="width:100%; margin-top:10px; padding-top:16px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <span id="mobile-login-btn" class="mnav-item" onclick="navigateTo('login'); chiudiMenuMobile()">🔑 Accedi o Registrati</span>
+    <span id="mobile-profile-btn" class="mnav-sub" style="display:none;" onclick="navigateTo('profile'); chiudiMenuMobile()">⚙️ Profilo</span>
+    <span id="mobile-logout-btn" class="mnav-sub" style="display:none; color:#ff6b6b;" onclick="handleLogout(); chiudiMenuMobile()">🚪 Logout</span>
+  </div>
+</div>
 
 <header>
     <div class="brand" onclick="navigateTo('home')">
@@ -282,6 +616,11 @@
 </div>
     </nav>
     
+    <!-- HAMBURGER (solo mobile) -->
+    <button class="hamburger-btn" onclick="apriMenuMobile()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    
     <div class="header-right">
         <div id="logged-user-area" class="hidden">
             <button class="user-trigger" id="display-name" onclick="toggleUserMenu(event)">UTENTE</button>
@@ -317,7 +656,6 @@
                     <div style="margin-top:20px; text-align:center;">
 						<h3 style="color: var(--primary);">Record Mensile Partite:</h3>
 						<div style="margin-top:20px; text-align:center;">
-						<!-- TASTO STORICO -->
 					<div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 18px;">
 						<button onclick="openHistory()" style="
 							width: 100%; padding: 12px; border: none; border-radius: 12px;
@@ -330,7 +668,6 @@
 						</button>
 					</div>
 
-					<!-- MODALE STORICO -->
 					<div id="history-modal" style="
 						display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55);
 						z-index:9999; align-items:center; justify-content:center;
@@ -350,7 +687,6 @@
 							<div id="history-content"></div>
 						</div>
 					</div>
-										<!-- VITTORIE -->
 			<div style="display:flex; justify-content:center; align-items:center; gap:15px;">
 				<button onclick="updateRecord('win', -1)" class="record-btn">-</button>
 				<span id="win-count" style="font-size: 3rem; font-weight: 900; color: var(--success);">0</span>
@@ -360,7 +696,6 @@
 
     <hr style="margin: 10px 0; opacity: 0.1;">
 
-    <!-- SCONFITTE -->
     <div style="display:flex; justify-content:center; align-items:center; gap:15px;">
         <button onclick="updateRecord('loss', -1)" class="record-btn">-</button>
         <span id="loss-count" style="font-size: 3rem; font-weight: 900; color: var(--danger);">0</span>
@@ -407,7 +742,6 @@
                     </select>
                 </div>
             </div>
-			
 			
             <div style="background: white; padding: 25px; border-radius: 25px; box-shadow: var(--shadow);">
                 <div id="calendar-grid" class="calendar-grid"></div>
@@ -476,7 +810,7 @@
 						</tbody>
 					</table>
 				</div>
-								<div id="section-admin" class="cat-section" style="display: none;">
+				<div id="section-admin" class="cat-section" style="display: none;">
 					<div style="
 						background: linear-gradient(135deg, #1a1a2e, #16213e);
 						border-radius: 20px; padding: 30px;
@@ -500,7 +834,6 @@
 							</div>
 						</div>
 
-						<!-- STATS -->
 						<div style="display:grid; grid-template-columns:repeat(3,1fr); gap:15px; margin-bottom:25px;">
 							<div style="background:#0f0f23; border:1px solid #e94560; border-radius:15px; padding:20px; text-align:center;">
 								<div id="admin-users-count" style="font-size:2rem; font-weight:900; color:#e94560;">0</div>
@@ -516,7 +849,6 @@
 							</div>
 						</div>
 
-						<!-- LISTA UTENTI -->
 						<div style="background:#0f0f23; border:1px solid #333; border-radius:15px; padding:20px;">
 							<h3 style="color:#e94560; margin-bottom:15px; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;">
 								👥 Gestione Utenti
@@ -601,7 +933,6 @@
     Segui le partite della Mercede Basket in diretta streaming.
   </p>
 
-  <!-- PANNELLO ALLENATORE -->
   <div id="live-admin-panel" style="display:none; background: white; border-radius: 20px;
     padding: 25px; box-shadow: var(--shadow); margin-bottom: 25px;
     border-left: 5px solid var(--primary);">
@@ -624,16 +955,10 @@
     </div>
     <p id="live-status-msg" style="margin-top:10px; font-size:0.8rem; color:var(--gray);"></p>
   </div>
-	
 
   <div style="background: white; border-radius: 25px; overflow: hidden; box-shadow: var(--shadow); position: relative;">
-    <!-- OVERLAY INVISIBILE che blocca i controlli -->
     <div style="position: absolute; inset: 0; z-index: 10; cursor: default;" onclick="return false;"></div>
-
-    <!-- PLAYER YOUTUBE -->
     <div style="position: relative; padding-bottom: 56.25%; height: 0; background: #000;">
-
-      <!-- MESSAGGIO "Nessuna trasmissione" -->
       <div id="no-live-msg" style="
         position: absolute; inset: 0; z-index: 20;
         background: #000; display: flex; flex-direction: column;
@@ -644,8 +969,6 @@
         <p style="color: white; font-size: 1.2rem; font-weight: 800;">Nessuna trasmissione per ora.</p>
         <p style="color: #666; font-size: 0.85rem;">Le dirette appariranno automaticamente qui.</p>
       </div>
-
-      <!-- IFRAME -->
       <iframe
         id="live-iframe"
         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none;"
@@ -655,7 +978,6 @@
     </div>
   </div>
 
-  <!-- TASTO SCHERMO INTERO -->  
   <div style="text-align: right; margin-top: 10px;">
     <button onclick="goFullscreen()" id="fullscreen-btn" style="
       background: var(--primary); color: white;
@@ -668,7 +990,6 @@
     </button>
   </div>
 
-  <!-- INFO SOTTO IL PLAYER -->
   <div style="margin-top: 10px; background: white; border-radius: 20px;
     padding: 20px 25px; box-shadow: var(--shadow);
     display: flex; align-items: center; gap: 15px;">
@@ -734,7 +1055,6 @@
     </div>
 </div>
 
-<!-- PAGINA I TUOI PUNTI ONLINE -->
 <div id="page-miei-punti" class="view hidden">
     <h2 style="color: var(--primary); margin-bottom: 25px;">🏀 I tuoi Punti Online</h2>
     <div style="background:white; border-radius:20px; padding:40px; box-shadow:var(--shadow); text-align:center; max-width:500px; margin:0 auto;">
@@ -761,7 +1081,6 @@
     </div>
 </div>
 
-<!-- PAGINA CLASSIFICA PUNTI -->
 <div id="page-classifica" class="view hidden">
     <h2 style="color: var(--primary); margin-bottom: 25px;">🏆 Classifica Punti Online</h2>
     <div style="background:white; border-radius:20px; padding:25px; box-shadow:var(--shadow);">
@@ -769,7 +1088,6 @@
     </div>
 </div>
 
-<!-- POPUP PUNTI ONLINE GIORNALIERO -->
 <div id="popup-puntipalla" style="
     display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
     z-index:99998; align-items:center; justify-content:center;">
@@ -823,13 +1141,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <script>
-    /**
-     * LOGICA APPLICATIVA MERCEDE BASKET
-     * Gestione stato utente, calendario dinamico e galleria immagini.
-     */
-	 
-
-	const monthNames = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
+    const monthNames = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno",
                     "Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
 
 function openHistory() {
@@ -876,7 +1188,7 @@ function openHistory() {
     document.getElementById('history-modal').style.display = 'flex';
 }
 
-	function closeHistory() {
+function closeHistory() {
     document.getElementById('history-modal').style.display = 'none';
 }
  
@@ -887,8 +1199,6 @@ function openHistory() {
 	];
 	let users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
 
-    // Database Partite (Inizializzato con esempi)
-	// DOPO
 	const defaultMatches = [
     { id: 1, day: 22, month: 2, year: 2026, opp: "Mercede vs Coral Basket", t: "18:30", type: "casa", photos: [] },
     { id: 2, day: 28, month: 2, year: 2026, opp: "Mercede vs Dinamo Sassari", t: "16:00", type: "trasferta", photos: [] }
@@ -914,8 +1224,6 @@ function openHistory() {
 	let wins = monthlyRecords[currentMonthKey].wins;
 	let losses = monthlyRecords[currentMonthKey].losses;
 	
-
-	// Mostra subito i valori quando carica la pagina
 	document.addEventListener("DOMContentLoaded", () => {
 		document.getElementById('win-count').innerText = wins;
 		document.getElementById('loss-count').innerText = losses;
@@ -941,7 +1249,6 @@ function openHistory() {
 
     // --- NAVIGAZIONE ---
     function navigateTo(viewId) {
-		// Mostra loader
 		if(viewId !== 'miei-punti' && viewId !== 'classifica') {
 			mostraLoader();
 		} 
@@ -950,7 +1257,6 @@ function openHistory() {
         const target = document.getElementById(`page-${viewId}`);
         if(target) target.classList.remove('hidden');
         
-        // Trigger render specifici
         if(viewId === 'home') renderMatches();
         if(viewId === 'calendar') renderCalendar();
         if(viewId === 'news') renderNews();
@@ -998,9 +1304,26 @@ function adminDeleteUser(name) {
         document.querySelectorAll('.user-dropdown').forEach(d => d.style.display = 'none');
     }
 
-    // --- GESTIONE PARTITE & FOTO (LOGICA RICHIESTA) ---
-    
-	function addTrainingDialog(day) {
+	// ---- MENU MOBILE ----
+	function apriMenuMobile() {
+	  const overlay = document.getElementById('mobile-nav-overlay');
+	  overlay.style.display = 'flex';
+	  // aggiorna visibilità admin/mstudio
+	  const isAdmin = currentUser && currentUser.role === 'HostWeb';
+	  const isCoach = currentUser && currentUser.role === 'Allenatore';
+	  document.getElementById('mobile-admin-btn').style.display = isAdmin ? 'block' : 'none';
+	  document.getElementById('mobile-mstudio-btn').style.display = isCoach ? 'block' : 'none';
+	  // bottoni login/logout
+	  document.getElementById('mobile-login-btn').style.display = currentUser ? 'none' : 'block';
+	  document.getElementById('mobile-profile-btn').style.display = currentUser ? 'block' : 'none';
+	  document.getElementById('mobile-logout-btn').style.display = currentUser ? 'block' : 'none';
+	}
+
+	function chiudiMenuMobile() {
+	  document.getElementById('mobile-nav-overlay').style.display = 'none';
+	}
+	
+    function addTrainingDialog(day) {
     if(!currentUser || currentUser.role !== 'Allenatore') return;
 
     const month = parseInt(document.getElementById('cal-month').value);
@@ -1033,7 +1356,6 @@ function adminDeleteUser(name) {
     const month = parseInt(document.getElementById('cal-month').value);
     const year = parseInt(document.getElementById('cal-year').value);
     
-    // Input Nome Squadra
     const teamInput = prompt("Inserisci il nome della squadra avversaria:");
     if(!teamInput) return;
     
@@ -1054,11 +1376,8 @@ function adminDeleteUser(name) {
 
 	if (typeof emailjs !== 'undefined') {
         emailjs.init("H-w1PL0dzWsJst6qt"); 
-    } else {
-        console.error("Errore: La libreria EmailJS non è stata caricata!");
     }
 
-    // Salva localmente
     matches.push(newMatch);
     renderCalendar();
     showDay(day);
@@ -1066,28 +1385,15 @@ function adminDeleteUser(name) {
     saveMatches();
 	aggiungiPuntiBalla(3, 'Evento aggiunto al calendario');
 	
-    // --- PARTE NUOVA: INVIO EMAIL AUTOMATICO ---
-	// --- PARTE NUOVA: INVIO EMAIL AUTOMATICO ---
     const urlSheetDB = "https://sheetdb.io/api/v1/7z0n1zvmau7t4"; 
 
     fetch(urlSheetDB)
     .then(res => res.json())
     .then(iscritti => {
-        // Log per vedere se SheetDB risponde (controlla in console F12)
-        console.log("Dati ricevuti da SheetDB:", iscritti);
-
-        // Prende le email dalla colonna 'email'
         const listaEmail = iscritti.map(u => u.email).filter(e => e).join(",");
         
-        if (!listaEmail) {
-            console.error("Nessun indirizzo email trovato nel foglio!");
-            alert("Errore: La lista delle email è vuota. Controlla il Foglio Google!");
-            return;
-        }
+        if (!listaEmail) { return; }
 
-        console.log("Destinatari pronti:", listaEmail);
-
-        // Parametri per il tuo template EmailJS
         const templateParams = {
             to_email: listaEmail,
             categoria: fullOpponentName,
@@ -1096,10 +1402,8 @@ function adminDeleteUser(name) {
             tipo: matchType
         };
 
-        // INIZIALIZZA SEMPRE CON LA TUA PUBLIC KEY (Mettila qui dentro per sicurezza)
         emailjs.init("H-w1PL0dzWsJst6qt"); 
 
-        // ATTENZIONE: Qui ho messo il tuo nuovo template template_xflo8so
         return emailjs.send('service_l9ajb3g', 'template_xflo8so', templateParams);
     })
     .then((response) => {
@@ -1108,7 +1412,6 @@ function adminDeleteUser(name) {
     })
     .catch(err => {
         console.error("Errore completo:", err);
-        // Se l'errore è 400, EmailJS ti dirà il motivo preciso
         alert("Errore nell'invio! Dettaglio: " + (err.text || err));
     });
 }
@@ -1125,52 +1428,10 @@ function adminDeleteUser(name) {
         if(newTeam) m.opp = "Mercede vs " + newTeam;
         if(newTime) m.t = newTime;
 		
-        savematches();
+        saveMatches();
         showDay(day);
         renderMatches();
     }
-
-	function deleteMatch(id, day) {
-    console.log("Inizio eliminazione partita ID:", id);
-
-    const m = matches.find(match => match.id === id);
-    if (!m) return;
-
-    if (!confirm("Eliminare la partita e avvisare tutti?")) return;
-		mostraLoader();
-
-    // 1. CANCELLAZIONE FISICA (Feedback immediato)
-    matches = matches.filter(match => match.id !== id);
-    renderCalendar();
-    showDay(day);
-
-    // 2. TENTATIVO INVIO MANUALE (Senza SheetDB per ora, testiamo se EmailJS va)
-    console.log("Provo a inviare email...");
-
-    // Forza l'inizializzazione qui dentro
-    emailjs.init("H-w1PL0dzWsJst6qt"); 
-
-    const params = {
-        to_email: "latuamail@gmail.com", // METTI LA TUA MAIL QUI PER IL TEST!
-        categoria: m.opp || "Gara Annullata",
-        data: m.day + "/" + (m.month + 1),
-        orario: m.t || "N.D."
-    };
-
-    emailjs.send('service_l9ajb3g', 'template_nl21z1m', params)
-        .then(function(response) {
-            console.log("SUCCESS!", response.status, response.text);
-            alert("PARTITA ELIMINATA E MAIL INVIATA!");
-        }, function(error) {
-            console.log("FAILED...", error);
-            alert("ERRORE EMAILJS: " + JSON.stringify(error));
-        });
-}
-
-	function saveMatches() {
-    const matchesWithoutPhotos = matches.map(m => ({...m, photos: []}));
-    localStorage.setItem('matches', JSON.stringify(matchesWithoutPhotos));
-}
 
 function uploadPhotos(event, matchId) {
     const m = matches.find(item => item.id === matchId);
@@ -1203,22 +1464,19 @@ function uploadPhotos(event, matchId) {
 	}
 
 	function deleteMatch(id, day) {
-    // 1. Cerchiamo i dati della partita prima di eliminarla (servono per l'email)
     const matchToDelete = matches.find(m => m.id === id);
     if (!matchToDelete) return;
 
     if (confirm("Vuoi davvero eliminare questo evento? Verrà inviata una mail di annullamento.")) {
         
-        // --- LOGICA DI CANCELLAZIONE E SALVATAGGIO (I tuoi comandi) ---
-        localStorage.removeItem('photos_' + id); // Pulisce le foto vecchie
-        matches = matches.filter(m => m.id !== id); // Rimuove la partita dall'array
+        localStorage.removeItem('photos_' + id);
+        matches = matches.filter(m => m.id !== id);
         
-        saveMatches();    // <--- Salva su localStorage
-        renderCalendar(); // <--- Aggiorna i quadratini del calendario
-        showDay(day);     // <--- Aggiorna la vista del giorno
-        renderMatches();  // <--- Aggiorna la lista partite sotto
+        saveMatches();
+        renderCalendar();
+        showDay(day);
+        renderMatches();
         
-        // --- LOGICA INVIO EMAIL DI AVVISO ---
         const urlSheetDB = "https://sheetdb.io/api/v1/7z0n1zvmau7t4";
 
         fetch(urlSheetDB)
@@ -1227,7 +1485,7 @@ function uploadPhotos(event, matchId) {
             const listaEmail = iscritti.map(u => u.email).filter(e => e).join(",");
             
             if (listaEmail) {
-                emailjs.init("H-w1PL0dzWsJst6qt"); // Metti la tua chiave qui!
+                emailjs.init("H-w1PL0dzWsJst6qt");
 
                 const templateParams = {
                     to_email: listaEmail,
@@ -1244,38 +1502,13 @@ function uploadPhotos(event, matchId) {
         })
         .catch(err => {
             console.error("Errore invio mail:", err);
-            // Non mettiamo un alert di errore qui per non disturbare se la partita è già stata cancellata con successo
         });
     }
 }
 
-	function inviaNotificaAllenatore() {
-    console.log("Inizio funzione invio...");
-
-    const urlSheetDB = "https://sheetdb.io/api/v1/7z0n1zvmau7t4"; 
-
-    fetch(urlSheetDB)
-    .then(response => response.json())
-    .then(iscritti => {
-        console.log("Iscritti recuperati:", iscritti);
-        const listaEmail = iscritti.map(u => u.email).join(",");
-        
-        const templateParams = {
-            to_email: listaEmail,
-            categoria: "Test",
-            data: "Oggi",
-            orario: "Adesso"
-        };
-
-        return emailjs.send('service_dd31ele', 'template_bmcxoqo', templateParams);
-    })
-    .then(() => {
-        alert("Email inviata con successo!");
-    })
-    .catch(error => {
-        console.error("Errore rilevato:", error);
-        alert("C'è stato un errore. Guarda la console (F12)");
-    });
+	function saveMatches() {
+    const matchesWithoutPhotos = matches.map(m => ({...m, photos: []}));
+    localStorage.setItem('matches', JSON.stringify(matchesWithoutPhotos));
 }
 
     // --- RENDERERS ---
@@ -1286,24 +1519,19 @@ function uploadPhotos(event, matchId) {
 		const grid = document.getElementById('calendar-grid');
 		const daysInMonth = new Date(year, month + 1, 0).getDate();
 		
-		// Giorno della settimana del 1° del mese (0=Dom, 1=Lun, ..., 6=Sab)
 		let firstDay = new Date(year, month, 1).getDay();
-		// Converti da domenica=0 a lunedì=0 (sistema europeo)
 		firstDay = (firstDay === 0) ? 6 : firstDay - 1;
 
 		let html = '';
 		
-		// Intestazioni giorni
 		['Lun','Mar','Mer','Gio','Ven','Sab','Dom'].forEach(d => {
 			html += `<div style="text-align:center; font-size:0.7rem; font-weight:900; color:var(--primary); text-transform:uppercase; padding-bottom:5px;">${d}</div>`;
 		});
 
-		// Celle vuote prima del primo giorno
 		for(let i = 0; i < firstDay; i++) {
 			html += `<div class="day-box" style="background:#f9f9f9; color:#ccc; cursor:default; pointer-events:none;"></div>`;
 		}
 
-		// Giorni del mese
 		for(let i = 1; i <= daysInMonth; i++) {
 			const dayMatches = matches.filter(m => m.day === i && m.month === month && m.year === year);
 			let dayClass = "day-box";
@@ -1392,9 +1620,7 @@ function uploadPhotos(event, matchId) {
                                 <span style="margin-left:15px; color:var(--gray); font-size:0.8rem;">${count} / 25 Foto</span>
                             </div>
                         ` : ''}
-					
 
-						
                         <div style="margin-top:20px;">
                             ${m.photos.map((img, idx) => `
                                 <div class="big-photo-item">
@@ -1412,8 +1638,6 @@ function uploadPhotos(event, matchId) {
         document.getElementById('detail-content').innerHTML = content;
         window.scrollTo({ top: document.getElementById('day-details').offsetTop - 100, behavior: 'smooth' });
     }
-
-    // --- ALTRE FUNZIONALITÀ ---
 
     function handleLogin() {
         const n = document.getElementById('l-name').value;
@@ -1476,60 +1700,9 @@ function uploadPhotos(event, matchId) {
 		navigateTo('login');
 	}
 
-	function inviaNotificaAllenatore() {
-    const cat = document.getElementById('cal-category').value; // ID del campo categoria
-    const dat = document.getElementById('cal-date').value;     // ID del campo data
-    const ora = document.getElementById('cal-time').value;     // ID del campo ora
-
-    const urlSheetDB = "https://sheetdb.io/api/v1/7z0n1zvmau7t4"; 
-
-    // 1. Recuperiamo tutti gli iscritti dal foglio Google
-    fetch(urlSheetDB)
-    .then(response => response.json())
-    .then(iscritti => {
-        // Estraiamo solo le email e creiamo una lista separata da virgole
-        // Esempio: "mario@gmail.com, luca@gmail.com, anna@gmail.com"
-        const listaEmail = iscritti.map(utente => utente.email).join(",");
-
-        if (!listaEmail) {
-            alert("Non ci sono iscritti nel database!");
-            return;
-        }
-
-        // 2. Prepariamo i dati per EmailJS
-		// --- COPIA DA QUI ---
-		const templateParams = {
-			to_email: listaEmail,
-			categoria: fullOpponentName,
-			data: `${day}/${month + 1}/${year}`,
-			orario: time,
-			tipo: matchType
-
-		};
-		// 1. Inizializza SEMPRE prima di inviare (usa la tua PUBLIC KEY nuova)
-		emailjs.init("H-w1PL0dzWsJst6qt"); 
-
-		// 2. Invio con i tuoi codici corretti
-		emailjs.send('service_l9ajb3g', 'template_xflo8so', templateParams)
-			.then(function(response) {
-				console.log("SUCCESS!", response.status, response.text);
-				alert("GRANDIOSO! Email inviata a tutta la squadra.");
-			}, function(error) {
-				// Se esce questo alert, LEGGI IL NUMERO che appare
-				alert("ERRORE CRITICO: " + error.status + " - " + error.text);
-				console.error("FAILED...", error);
-			});
-
-    })
-    .catch(err => {
-        console.error("Errore nel recupero iscritti:", err);
-        alert("Errore tecnico nel recupero della lista email.");
-    });
-}
-
 	function handleRegister() {
     const n = document.getElementById('r-name').value;
-    const email = document.getElementById('r-email').value; // Assicurati di avere questo ID nell'HTML
+    const email = document.getElementById('r-email').value;
     const r = document.getElementById('r-role').value;
     const p = document.getElementById('r-pass').value;
     const q = document.getElementById('r-question').value;
@@ -1551,7 +1724,6 @@ function uploadPhotos(event, matchId) {
     }
 
     if(n && email && p && q && a) {
-        // --- INVIO A GOOGLE SHEETS ---
         const urlSheetDB = "https://sheetdb.io/api/v1/7z0n1zvmau7t4"; 
 
         fetch(urlSheetDB, {
@@ -1559,17 +1731,14 @@ function uploadPhotos(event, matchId) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ 
                 "data": [{
-                    "email": email,           // Va in colonna A
-                    "nome": n.trim(),         // Va in colonna B
-                    "ruolo": isHost ? 'HostWeb' : r, // Va in colonna C
-                    "data_iscrizione": new Date().toLocaleDateString() // Va in colonna D
+                    "email": email,
+                    "nome": n.trim(),
+                    "ruolo": isHost ? 'HostWeb' : r,
+                    "data_iscrizione": new Date().toLocaleDateString()
                 }] 
             })
         })
         .then(res => {
-            console.log("Dati salvati su Google Sheets!");
-            
-            // Logica originale per il sito
             const newUser = { 
                 name: n.replace(HOST_CODE, '').trim(),
                 email: email,
@@ -1614,9 +1783,7 @@ function uploadPhotos(event, matchId) {
     }
 	if(currentUser) controllaPopupGiornaliero();
 
-    // 🔥 MOSTRA BOTTONI RECORD SOLO ALLENATORE
     const isCoach = currentUser && currentUser.role === 'Allenatore';
-
     document.querySelectorAll('.record-btn').forEach(btn => {
         btn.style.display = isCoach ? 'inline-block' : 'none';
     });
@@ -1742,12 +1909,10 @@ function checkLiveStatus() {
     const adminPanel = document.getElementById('live-admin-panel');
     const fullscreenBtn = document.getElementById('fullscreen-btn');
 
-    // Mostra pannello solo all'allenatore
     if (adminPanel) {
         adminPanel.style.display = (currentUser && currentUser.role === 'Allenatore') ? 'block' : 'none';
     }
 
-    // Controlla se c'è una live salvata
     const liveUrl = localStorage.getItem('current-live-url');
 
     if (liveUrl) {
@@ -1759,7 +1924,6 @@ function checkLiveStatus() {
             if (fullscreenBtn) fullscreenBtn.style.display = 'inline-block';
         }
     } else {
-        // Nessuna live manuale, prova con API YouTube
         const API_KEY = 'AIzaSyBFwiia1oAOOWnRk0V1Cq27mtmlWMtHgcM';
         const CHANNEL_ID = 'UCiTxqcvxMowB2TKgv_0RK3A';
 
@@ -1780,7 +1944,6 @@ function checkLiveStatus() {
             }
         })
         .catch(err => {
-            console.error("Errore controllo live:", err);
             iframe.src = '';
             iframe.style.display = 'none';
             msg.style.display = 'flex';
@@ -1790,32 +1953,22 @@ function checkLiveStatus() {
 }
 
 function convertiUrlEmbed(url) {
-    // YouTube: youtube.com/watch?v=XXXX o youtu.be/XXXX
     const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
     if (ytMatch) {
         return `https://www.youtube.com/embed/${ytMatch[1]}?autoplay=1&controls=1&modestbranding=1&rel=0`;
     }
-
-    // Twitch: twitch.tv/CANALE
     const twMatch = url.match(/twitch\.tv\/([a-zA-Z0-9_]+)/);
     if (twMatch) {
         return `https://player.twitch.tv/?channel=${twMatch[1]}&parent=mercede-basket-alghero.github.io`;
     }
-
     return null;
 }
 
 function avviaLive() {
     const input = document.getElementById('live-url-input').value.trim();
-    if (!input) {
-        alert("Incolla un link valido!");
-        return;
-    }
+    if (!input) { alert("Incolla un link valido!"); return; }
     const embedUrl = convertiUrlEmbed(input);
-    if (!embedUrl) {
-        alert("Link non riconosciuto! Usa un link YouTube o Twitch.");
-        return;
-    }
+    if (!embedUrl) { alert("Link non riconosciuto! Usa un link YouTube o Twitch."); return; }
     localStorage.setItem('current-live-url', input);
     document.getElementById('live-status-msg').innerText = "✅ Live avviata con successo!";
     checkLiveStatus();
@@ -1839,8 +1992,7 @@ function goFullscreen() {
 
 	async function trackVisitor() {
     try {
-        
-		const data = await res.json();
+        const data = await res.json();
         const visitor = {
             ip: data.ip || 'N/D',
             city: data.city || 'N/D',
@@ -1926,8 +2078,12 @@ function renderUserDetails() {
     `).join('');
 }
 
-    // Init
-    window.onclick = closeAllDropdowns;
+    window.onclick = function(e) {
+      if(!e.target.closest('#mobile-nav-overlay') && !e.target.closest('.hamburger-btn')) {
+        // non chiude il menu mobile col click fuori (già ha il pulsante X)
+      }
+      closeAllDropdowns();
+    };
     renderMatches();
     renderAds();
 	updateUI();
@@ -2246,7 +2402,6 @@ function renderMieiPunti() {
     document.getElementById('pp-count').innerText = getPuntiBalla();
 }
 
-	
 	// --- ROTAZIONE GIF SFONDO ---
 	const bgGifs = [
 	    'https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcHh2ZzRuYmxwNXc5ZjFneHE5emFjaDNydnVvdWl3Z2RlZ2plN2tpdSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3upXBfSi6erok/giphy.gif',
@@ -2451,7 +2606,6 @@ function launchAnim() {
   }
   requestAnimationFrame(frame);
 }
-
 </script>
 
 <!-- ===== BANNER COOKIES ===== -->
@@ -2485,7 +2639,6 @@ function launchAnim() {
   </div>
 </div>
 
-<!-- MODALE INFO COOKIE -->
 <div id="cookie-modal" style="
   display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
   z-index:100000; align-items:center; justify-content:center;
@@ -2499,7 +2652,7 @@ function launchAnim() {
       Questo sito utilizza <b>cookie tecnici</b> essenziali per il corretto funzionamento
       (autenticazione, preferenze, calendario). Non vengono utilizzati cookie di profilazione
       o di terze parti a fini pubblicitari.<br><br>
-      I dati salvati (<code>localStorage</code>) rimangono sul tuo dispositivo e non vengonoreg
+      I dati salvati (<code>localStorage</code>) rimangono sul tuo dispositivo e non vengono
       trasmessi a server esterni.
     </p>
     <button onclick="document.getElementById('cookie-modal').style.display='none'" style="
@@ -2513,12 +2666,8 @@ function launchAnim() {
   window.addEventListener('DOMContentLoaded', function() {
     const banner = document.getElementById('cookie-banner');
     const consent = localStorage.getItem('cookie-consent');
-    
-    if (!consent) {
-      banner.style.display = 'block'; // mostra solo se non ha ancora scelto
-    } else {
-      banner.style.display = 'none';
-    }
+    if (!consent) { banner.style.display = 'block'; }
+    else { banner.style.display = 'none'; }
   });
 
   function acceptCookies() {
@@ -2543,15 +2692,10 @@ function launchAnim() {
     document.getElementById('cookie-modal').style.display = 'flex';
   }
 </script>
-	<footer>
+
+<footer>
 	<p style="text-align: center">&copy; <strong>Sito creato da Ezio. Tutti i diritti riservati.</strong></p>
-	</footer>
-
-	Il cursore personalizzato apparirà in questa area
-
-Blu • Bianco • Giallo • Grigio
-
-/* Incolla questo PRIMA di </body> nel tuo index.html */
+</footer>
 
 <style>
 * { cursor: none !important; }
@@ -2563,6 +2707,11 @@ Blu • Bianco • Giallo • Grigio
 }
 #custom-cursor svg { width:22px; height:22px;
   filter: drop-shadow(0px 1px 2px rgba(0,40,120,0.35)); }
+/* Su mobile nasconde il cursore personalizzato */
+@media (max-width: 900px) {
+  * { cursor: auto !important; }
+  #custom-cursor { display: none !important; }
+}
 </style>
 
 <div id="custom-cursor">
