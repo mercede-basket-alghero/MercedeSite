@@ -2722,50 +2722,82 @@ function launchAnim() {
 * { cursor: none !important; }
 #custom-cursor {
   position: fixed; top: 0; left: 0;
-  width: 22px; height: 22px;
+  width: 30px; height: 30px;
   pointer-events: none; z-index: 999999;
-  transform: translate(-2px, -2px);
+  transform: translate(-15px, -15px);
 }
-#custom-cursor svg { width:22px; height:22px;
-  filter: drop-shadow(0px 1px 2px rgba(0,40,120,0.35)); }
+#custom-cursor img {
+  width: 30px; height: 30px; object-fit: contain; border-radius: 50%;
+  filter: drop-shadow(0px 2px 4px rgba(0,40,120,0.45));
+}
+#custom-cursor .cursor-fallback {
+  display: none;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: #00468C; color: #fbc02d;
+  align-items: center; justify-content: center;
+  font-size: 0.6rem; font-weight: 900; font-family: 'Bebas Neue', sans-serif;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+#cursor-ball {
+  position: fixed; top: 0; left: 0;
+  font-size: 26px; pointer-events: none; z-index: 999998;
+  transform: translate(-13px, -13px);
+  opacity: 0; transition: opacity 0.15s ease;
+}
+#cursor-ball.active {
+  opacity: 1;
+  animation: cursorBallBounce 0.55s ease-in-out infinite;
+}
+@keyframes cursorBallBounce {
+  0%, 100% { transform: translate(-13px, -8px) scale(1); }
+  50% { transform: translate(-13px, -34px) scale(0.9); }
+}
 /* Su mobile nasconde il cursore personalizzato */
 @media (max-width: 900px) {
   * { cursor: auto !important; }
   #custom-cursor { display: none !important; }
+  #cursor-ball { display: none !important; }
 }
 </style>
 
 <div id="custom-cursor">
-  <svg viewBox="0 0 22 26" fill="none">
-    <polygon points="2,2 2,22 8,16 12,24 15,23 11,15 18,15"
-      fill="white" stroke="#00468C" stroke-width="1.5" stroke-linejoin="round"/>
-    <polygon points="2,2 2,22 8,16 12,24 15,23 11,15 18,15"
-      fill="url(#cursorGrad)" opacity="0.92"/>
-    <defs>
-      <linearGradient id="cursorGrad" x1="2" y1="2" x2="18" y2="24">
-        <stop offset="0%"   stop-color="#ffffff"/>
-        <stop offset="30%"  stop-color="#cce0f5"/>
-        <stop offset="65%"  stop-color="#00468C"/>
-        <stop offset="85%"  stop-color="#fbc02d"/>
-        <stop offset="100%" stop-color="#b0b8c1"/>
-      </linearGradient>
-    </defs>
-  </svg>
+  <img src="immagini/logomercede-nosfondo.png" alt="Mercede"
+       onerror="this.style.display='none'; this.parentNode.querySelector('.cursor-fallback').style.display='flex';">
+  <div class="cursor-fallback">MBA</div>
 </div>
+
+<div id="cursor-ball">🏀</div>
 
 <script>
 const cur = document.getElementById('custom-cursor');
+const curBall = document.getElementById('cursor-ball');
 let mx = -100, my = -100;
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
   cur.style.left = mx + 'px';
   cur.style.top  = my + 'px';
+  curBall.style.left = mx + 'px';
+  curBall.style.top  = my + 'px';
 });
 
 document.addEventListener('mouseleave', () => {
   cur.style.left = '-100px'; cur.style.top = '-100px';
+  curBall.style.left = '-100px'; curBall.style.top = '-100px';
 });
+
+// Palla che rimbalza quando si passa sopra una categoria
+function attivaHoverCategorie() {
+  const targets = document.querySelectorAll('[onclick*="showCategory"]');
+  targets.forEach(el => {
+    if (el.dataset.hoverBallBound) return;
+    el.dataset.hoverBallBound = "1";
+    el.addEventListener('mouseenter', () => curBall.classList.add('active'));
+    el.addEventListener('mouseleave', () => curBall.classList.remove('active'));
+  });
+}
+attivaHoverCategorie();
+document.addEventListener('DOMContentLoaded', attivaHoverCategorie);
 </script>
 
 <!-- LOADER MERCEDE -->
@@ -2820,4 +2852,3 @@ function nascondiLoader() {
 	
 </body>
 </html>
-
