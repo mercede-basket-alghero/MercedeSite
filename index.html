@@ -569,6 +569,9 @@
   <span class="mnav-sub" onclick="navigateTo('miei-punti'); chiudiMenuMobile()">🏀 I tuoi Punti Online</span>
   <span class="mnav-sub" onclick="navigateTo('classifica'); chiudiMenuMobile()">🏆 Classifica Punti</span>
 
+  <div class="mnav-section-label">Altro</div>
+  <span class="mnav-sub" onclick="navigateTo('altro'); chiudiMenuMobile()">🛒 Work in Progress</span>
+
   <div id="mobile-user-section" style="width:100%; margin-top:10px; padding-top:16px; border-top: 1px solid rgba(255,255,255,0.1);">
     <span id="mobile-login-btn" class="mnav-item" onclick="navigateTo('login'); chiudiMenuMobile()">🔑 Accedi o Registrati</span>
     <span id="mobile-profile-btn" class="mnav-sub" style="display:none;" onclick="navigateTo('profile'); chiudiMenuMobile()">⚙️ Profilo</span>
@@ -612,6 +615,12 @@
     <div class="user-dropdown" id="puntiballa-dropdown" style="top: 45px; right: auto; left: 0; display:none;">
         <span onclick="navigateTo('miei-punti'); closeAllDropdowns()">🏀 I tuoi Punti Online</span>
         <span onclick="navigateTo('classifica'); closeAllDropdowns()">🏆 Classifica Punti</span>
+    </div>
+</div>
+		<div style="position: relative; display: flex; align-items: center;">
+    <span class="nav-item" onclick="toggleAltro(event)"><strong><u>Altro ▼</u></strong></span>
+    <div class="user-dropdown" id="altro-dropdown" style="top: 45px; right: auto; left: 0;">
+        <span onclick="navigateTo('altro'); closeAllDropdowns()">🛒 Work in Progress</span>
     </div>
 </div>
     </nav>
@@ -786,7 +795,7 @@
                         <tbody>
                             <tr><td><b>Under 14 Femminile</b></td><td>Giovanile</td><td>-</td></tr>
                             <tr><td><b>Under 17</b></td><td>Giovanile+</td><td>-</td></tr>
-                            <tr><td><b>Serie B Femminile</b></td><td>Senior</td><td>-</td></tr>
+                            <tr><td><b>Serie A2 Femminile</b></td><td>Senior</td><td>-</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -795,7 +804,7 @@
                         <thead><tr><th>Squadra</th><th>Livello</th><th>Coach</th></tr></thead>
                         <tbody>
                             <tr><td><b>Under 14</b></td><td>Giovanile</td><td>Francesco</td></tr>
-                            <tr><td><b>Promozione</b></td><td>Senior</td><td>-</td></tr>
+                            <tr><td><b>DR1</b></td><td>Senior</td><td>-</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -806,7 +815,7 @@
 							<tr><td><b>Aquilotti</b></td><td>5-6 anni</td><td>-</td></tr>
 							<tr><td><b>Scoiattoli</b></td><td>7-8 anni</td><td>-</td></tr>
 							<tr><td><b>Esordienti</b></td><td>9-10 anni</td><td>-</td></tr>
-							<tr><td><b>Ragazzi</b></td><td>11-12 anni</td><td>-</td></tr>
+							<tr><td><b>Ragazzi</b></td><td>11-14 anni</td><td>-</td></tr>
 						</tbody>
 					</table>
 				</div>
@@ -1088,6 +1097,17 @@
     </div>
 </div>
 
+<div id="page-altro" class="view hidden">
+    <h2 style="color: var(--primary); margin-bottom: 25px;">📂 Altro</h2>
+    <div id="section-wip" class="cat-section">
+        <h3 style="color: var(--primary); margin-bottom: 20px;">🛒 Work in Progress</h3>
+        <div style="background:white; border-radius:20px; padding:40px; box-shadow:var(--shadow); text-align:center;">
+            <div style="font-size:3rem; margin-bottom:15px;">🚧</div>
+            <p style="font-size:1rem; color:#444; font-weight:600;">Questa stanza è in fase di elaborazione. Fai degli accessi giornalieri per ulteriori aggiornamenti.</p>
+        </div>
+    </div>
+</div>
+
 <div id="popup-puntipalla" style="
     display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6);
     z-index:99998; align-items:center; justify-content:center;">
@@ -1293,6 +1313,7 @@ function adminDeleteUser(name) {
 }
 
     function toggleCategories(e) { e.stopPropagation(); toggleEl('categories-dropdown'); }
+    function toggleAltro(e) { e.stopPropagation(); toggleEl('altro-dropdown'); }
     function toggleUserMenu(e) { e.stopPropagation(); toggleEl('user-dropdown'); }
     function toggleEl(id) {
         const el = document.getElementById(id);
@@ -2799,3 +2820,4 @@ function nascondiLoader() {
 	
 </body>
 </html>
+
